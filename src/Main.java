@@ -9,8 +9,15 @@ public class Main {
         window.setResizable(false);
         window.setTitle("Adventure2DGame");
 
+        //calling the gamePanel
+        gamePanel gamePanel = new gamePanel();
+        window.add(gamePanel);
+        window.pack(); // window to be sized to fit the preferred size and layouts of its subcomponents "gamePanel"
+
         //not specifying the window position
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+
+        gamePanel.startGameThread();
     }
 }
