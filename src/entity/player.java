@@ -13,19 +13,28 @@ public class player extends entity{
 
     gamePanel gp;
     keyHandler keyH;
+    //they're final because they do not change players screen position
+    public final int screenX;
+    public final int screenY;
 
     //implement at gamePanel
     public player(gamePanel gp, keyHandler keyH){
         this.gp = gp;
         this.keyH = keyH;
+
+        //halfway point of the screen
+        //fixed at the center of the screen
+        screenX = gp.screenWidth / 2 - (gp.tileSize/2);
+        screenY = gp.screenHeight / 2 - (gp.tileSize/2);
+
         setDefaultValue();
         getPlayerImage();
     }
 
     //default direction of the character
     public void setDefaultValue(){
-        x = 100;
-        y = 100;
+        worldX = gp.tileSize * 23;
+        worldY = gp.tileSize * 21;
         speed = 4;
         direction ="down";
     }
@@ -54,16 +63,16 @@ public class player extends entity{
 
             if (keyH.upPressed){
                 direction = "up";
-                y -= speed;
+                worldY -= speed;
             }else if (keyH.downPressed){
                 direction = "down";
-                y += speed;
+                worldY += speed;
             }else if (keyH.leftPressed){
                 direction = "left";
-                x -= speed;
+                worldX -= speed;
             }else {
                 direction = "right";
-                x += speed;
+                worldX += speed;
             }
 
             // the sprite counter only increase if one of the above is true. etc. the character is in still position
@@ -118,6 +127,6 @@ public class player extends entity{
                 }
             }
         }
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize,null); // draws an image on the screen
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize,null); // draws an image on the screen
     }
 }
