@@ -1,3 +1,7 @@
+package main;
+
+import entity.player;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,7 +12,7 @@ public class gamePanel extends JPanel implements Runnable {
 
     final int originalTileSize = 16; //16x16 pixel character
     final int scale = 3; // scaling the character
-    final int tileSize = originalTileSize * scale; // 48x48 scaled character
+    public final int tileSize = originalTileSize * scale; // 48x48 scaled character, setting public to access it
 
     // size of our game screen 4:3 scale - 576 x 768
     final int maxScreenCol = 16;
@@ -23,6 +27,7 @@ public class gamePanel extends JPanel implements Runnable {
     keyHandler keyH = new keyHandler();
 
     Thread gameThread;
+    player player = new player(this, keyH);
 
     //set player default position and moving speed
     int playerX = 100;
@@ -80,25 +85,14 @@ public class gamePanel extends JPanel implements Runnable {
 
     //updates our character position
     public void update(){
-        if (keyH.upPressed){
-            playerY -= playerSpeed;
-        }else if (keyH.downPressed){
-            playerY += playerSpeed;
-        }else if (keyH.leftPressed){
-            playerX -= playerSpeed;
-        }else if (keyH.rightPressed){
-            playerX += playerSpeed;
-        }
-
+        player.update();
     }
 
     //imagine this is your paintbrush
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-
-        g2.setColor(Color.WHITE);
-        g2.fillRect(playerX, playerY,tileSize,tileSize);
+        player.draw(g2);
         g2.dispose();
     }
 }
