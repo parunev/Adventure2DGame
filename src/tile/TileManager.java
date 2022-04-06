@@ -20,7 +20,7 @@ public class TileManager {
         tile = new Tile[10];// setting up 10 tiles (water, sand, water, walls, etc. etc.)
         mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
         getTileImage();
-        loadMap("/res/map01.txt");
+        loadMap("/res/world01.txt");
     }
 
     //implementing the images similar to the player part
@@ -34,6 +34,15 @@ public class TileManager {
 
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/water.png")));
+
+            tile[3] = new Tile();
+            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/earth.png")));
+
+            tile[4] = new Tile();
+            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/tree.png")));
+
+            tile[5] = new Tile();
+            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/sand.png")));
 
         }catch(IOException e){
             e.printStackTrace();
