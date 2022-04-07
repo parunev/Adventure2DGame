@@ -27,6 +27,9 @@ public class player extends entity{
         screenX = gp.screenWidth / 2 - (gp.tileSize/2);
         screenY = gp.screenHeight / 2 - (gp.tileSize/2);
 
+        //setting player solid area
+        solidArea = new Rectangle(8, 16, 32, 32);
+
         setDefaultValue();
         getPlayerImage();
     }
@@ -61,18 +64,29 @@ public class player extends entity{
         if (keyH.upPressed || keyH.downPressed
                 || keyH.leftPressed || keyH.rightPressed){
 
+            //first we check the direction and based on this direction we check the collision
             if (keyH.upPressed){
                 direction = "up";
-                worldY -= speed;
             }else if (keyH.downPressed){
                 direction = "down";
-                worldY += speed;
             }else if (keyH.leftPressed){
                 direction = "left";
-                worldX -= speed;
             }else {
                 direction = "right";
-                worldX += speed;
+            }
+
+            //CHECK TILE COLLISION
+            collisionOn = false;
+            gp.cCheker.checkTile(this);
+
+            //IF COLLISION IS FALSE, PLAYER CAN MOVE
+            if(!collisionOn){
+                switch (direction) {
+                    case "up" -> worldY -= speed;
+                    case "down" -> worldY += speed;
+                    case "left" -> worldX -= speed;
+                    case "right" -> worldX += speed;
+                }
             }
 
             // the sprite counter only increase if one of the above is true. etc. the character is in still position
