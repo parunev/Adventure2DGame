@@ -1,5 +1,6 @@
 package main;
 
+import object.objectBoots;
 import object.objectChest;
 import object.objectDoor;
 import object.objectKey;
@@ -41,5 +42,9 @@ public class assetSetter {
         gp.obj[6] = new objectChest();
         gp.obj[6].worldX = 10 * gp.tileSize;
         gp.obj[6].worldY = 7 * gp.tileSize;
+
+        gp.obj[7] = new objectBoots();
+        gp.obj[7].worldX = 37 * gp.tileSize;
+        gp.obj[7].worldY = 42 * gp.tileSize;
     }
 }
