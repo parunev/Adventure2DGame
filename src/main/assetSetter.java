@@ -11,6 +11,7 @@ public class assetSetter {
     public assetSetter(gamePanel gp){
         this.gp = gp;
     }
+
     //setting object locations
     public void setObject(){
         gp.obj[0] = new objectKey();

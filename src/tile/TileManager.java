@@ -47,11 +47,8 @@ public class TileManager {
             tile[5] = new Tile();
             tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/sand.png")));
 
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        }catch(IOException e){e.printStackTrace();}
     }
-
 
     public void loadMap(String filePath){
         try{
@@ -80,7 +77,6 @@ public class TileManager {
         }catch (Exception ignored){}
     }
 
-
     public void draw(Graphics2D g2){
        int worldCol = 0;
        int worldRow = 0;
@@ -104,9 +100,7 @@ public class TileManager {
                 // tile[tileNum].image is getting number from the txt. 0 - grass, 1 - wall, 2 - water etc. etc.
                 g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
-
            worldCol++;
-
            if (worldCol == gp.maxWorldCol){
                worldCol = 0;
                worldRow++;

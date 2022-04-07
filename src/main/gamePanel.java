@@ -11,16 +11,13 @@ public class gamePanel extends JPanel implements Runnable {
     //setting up a game screen
 
     //SCREEN SETTING
-
     final int originalTileSize = 16; //16x16 pixel character
     final int scale = 3; // scaling the character
-    public final int tileSize = originalTileSize * scale; // 48x48 scaled character, setting public to access it
-
-    // size of our game screen 4:3 scale - 576 x 768
+    public final int tileSize = originalTileSize * scale; // 48x48 scaled character
     public final int maxScreenCol = 16;
-    public final int maxScreenRow = 12;
-    public final int screenWidth = tileSize * maxScreenCol;
-    public final int screenHeight = tileSize * maxScreenRow;
+    public final int maxScreenRow = 12; // 3:4 RATIO
+    public final int screenWidth = tileSize * maxScreenCol; //768
+    public final int screenHeight = tileSize * maxScreenRow; //576
 
     //WORLD SETTING
     public final int maxWorldCol = 50;
@@ -29,21 +26,19 @@ public class gamePanel extends JPanel implements Runnable {
     public final int worldHeight = tileSize * maxScreenRow;
 
 
-    //FPS
+    //SYSTEM
     double fps = 60;
-
-    //KEYS
     keyHandler keyH = new keyHandler();
-
     public checkCollision cCheker = new checkCollision(this);
     public assetSetter aSetter = new assetSetter(this);
     public TileManager tileM = new TileManager(this);
     Thread gameThread;
     public player player = new player(this, keyH);
-    public objectManager[] obj = new objectManager[10]; // we prepare 10 slots for objects
+
+    //OBJECTS
+    public objectManager[] obj = new objectManager[10];
 
 
-    //set the size of the JPanel
     public gamePanel(){
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
         this.setBackground(Color.black);
@@ -95,7 +90,7 @@ public class gamePanel extends JPanel implements Runnable {
         }
     }
 
-    //updates our character position
+    //CHARACTER POSITION UPDATE
     public void update(){
         player.update();
     }
@@ -104,6 +99,7 @@ public class gamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+
         //TILE
         tileM.draw(g2); // always draw the tiles first otherwise you'll not see the character // tile draw
 
@@ -113,8 +109,11 @@ public class gamePanel extends JPanel implements Runnable {
                 objectManager.draw(g2, this);
             }
         }
+
         //PLAYER
-        player.draw(g2); // player draw
+        player.draw(g2);
+
+        //DESTROYER :D
         g2.dispose();
     }
 }

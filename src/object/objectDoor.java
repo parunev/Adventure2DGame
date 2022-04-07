@@ -13,5 +13,6 @@ public class objectDoor extends objectManager{
         }catch (IOException e){
             e.printStackTrace();
         }
+        collision = true;
     }
 }
