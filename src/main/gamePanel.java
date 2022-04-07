@@ -101,7 +101,7 @@ public class gamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D)g;
 
         //TILE
-        tileM.draw(g2); // always draw the tiles first otherwise you'll not see the character // tile draw
+        tileM.draw(g2); // always draw the tiles first otherwise you'll not see the character
 
         //OBJECT
         for (object.objectManager objectManager : obj) {
