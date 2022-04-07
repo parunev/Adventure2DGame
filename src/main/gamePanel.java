@@ -1,6 +1,7 @@
 package main;
 
 import entity.player;
+import object.objectManager;
 import tile.TileManager;
 
 import javax.swing.*;
@@ -35,9 +36,12 @@ public class gamePanel extends JPanel implements Runnable {
     keyHandler keyH = new keyHandler();
 
     public checkCollision cCheker = new checkCollision(this);
+    public assetSetter aSetter = new assetSetter(this);
     public TileManager tileM = new TileManager(this);
     Thread gameThread;
     public player player = new player(this, keyH);
+    public objectManager[] obj = new objectManager[10]; // we prepare 10 slots for objects
+
 
     //set the size of the JPanel
     public gamePanel(){
@@ -47,6 +51,10 @@ public class gamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyH);
         this.setFocusable(true); // receiving key inputs the game panel is focused:D
 
+    }
+    //creating this method for adding other stuff in the future
+    public void setupGame(){
+        aSetter.setObject();
     }
 
 
@@ -96,7 +104,16 @@ public class gamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+        //TILE
         tileM.draw(g2); // always draw the tiles first otherwise you'll not see the character // tile draw
+
+        //OBJECT
+        for (object.objectManager objectManager : obj) {
+            if (objectManager != null) { // we need to check if there is an object
+                objectManager.draw(g2, this);
+            }
+        }
+        //PLAYER
         player.draw(g2); // player draw
         g2.dispose();
     }
