@@ -50,16 +50,9 @@ public class gamePanel extends JPanel implements Runnable {
 
     }
     //creating this method for adding other stuff in the future
-    public void setupGame(){
-        aSetter.setObject();
-        playMusic(0);
-    }
+    public void setupGame(){aSetter.setObject();playMusic(0);}
 
-
-    public void startGameThread(){
-        gameThread = new Thread(this);
-        gameThread.start();
-    }
+    public void startGameThread(){gameThread = new Thread(this);gameThread.start();}
 
     //updates the character positions and draw the updated information
     //game-loop called "delta"
@@ -103,6 +96,10 @@ public class gamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
+        //DEBUG START
+        long drawStart = 0;
+        if (keyH.checkDrawTime){drawStart = System.nanoTime();}
+
         //TILE
         tileM.draw(g2); // always draw the tiles first otherwise you'll not see the character
 
@@ -119,25 +116,24 @@ public class gamePanel extends JPanel implements Runnable {
         //USER INTERFACE
         userInterface.draw(g2);
 
+        //DEBUG END
+        if (keyH.checkDrawTime){
+            long drawEnd = System.nanoTime();
+            long passed = drawEnd - drawStart;
+            g2.setColor(Color.white);
+            g2.drawString("Draw time: " + passed, 10, 400);
+            System.out.println("Draw time: " + passed);
+        }
+
         //DESTROYER :D
         g2.dispose();
     }
 
     //PLAYING MUSIC
-    public void playMusic(int i){
-
-        music.setFile(i);
-        music.play();
-        music.loop(); // we call loop for the background music
-    }
+    public void playMusic(int i){music.setFile(i);music.play();music.loop();} // we call loop for the background music
     //STOP MUSIC
-    public void stopMusic(){
+    public void stopMusic(){music.stop();}
 
-        music.stop();
-    }
     //PLAYING SOUNDS
-    public void playSE(int i){
-        se.setFile(i);
-        se.play();
-    }
+    public void playSE(int i){se.setFile(i);se.play();}
 }

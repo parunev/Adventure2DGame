@@ -1,6 +1,7 @@
 package object;
 
 import main.gamePanel;
+import main.utilityTool;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,6 +16,7 @@ public class objectManager {
 
     public int solidAreaDefaultX = 0;
     public int solidAreaDefaultY = 0;
+    utilityTool uTool = new utilityTool();
 
 
     public void draw(Graphics2D g2, gamePanel gp){

@@ -1,18 +1,20 @@
 package object;
 
+import main.gamePanel;
+
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.Objects;
 
 public class objectKey extends objectManager{
 
-    public objectKey(){
+    gamePanel gp;
+    public objectKey(gamePanel gp){
+        this.gp = gp;
         name = "key";
         try{
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/key.png")));
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+            uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+        }catch (IOException e){e.printStackTrace();}
     }
 }

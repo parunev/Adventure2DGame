@@ -20,7 +20,7 @@ public class userInterface {
 
         Dialog_30 = new Font("Dialog",Font.BOLD, 30); // finishing the instantiation before the game-loop start
         Dialog_60 = new Font("Dialog",Font.BOLD, 60);
-        objectKey key = new objectKey();
+        objectKey key = new objectKey(gp);
         keyImage = key.image;
     }
     //RECEIVING A TEXT

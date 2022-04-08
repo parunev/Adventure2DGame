@@ -3,6 +3,7 @@ package entity;
 import main.gamePanel;
 import main.keyHandler;
 import main.userInterface;
+import main.utilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -50,18 +51,28 @@ public class player extends entity{
 
     //CHARACTER SPRITES
     public void getPlayerImage(){
-        try{
-            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/boy_up_1.png")));
-            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/boy_up_2.png")));
-            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/boy_down_1.png")));
-            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/boy_down_2.png")));
-            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/boy_left_1.png")));
-            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/boy_left_2.png")));
-            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/boy_right_1.png")));
-            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/boy_right_2.png")));
+
+        up1 = setup("boy_up_1");
+        up2 = setup("boy_up_2");
+        down1 = setup("boy_down_1");
+        down2 = setup("boy_down_2");
+        left1 = setup("boy_left_1");
+        left2 = setup("boy_left_2");
+        right1 = setup("boy_right_1");
+        right2 = setup("boy_right_2");
+    }
+    public BufferedImage setup(String imageName){
+        utilityTool uTool = new utilityTool();
+        BufferedImage image = null;
+
+        try {
+            image = ImageIO.read((Objects.requireNonNull(getClass().getResourceAsStream("/res/" + imageName + ".png"))));
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+
         }catch (IOException e){
             e.printStackTrace();
         }
+        return image;
     }
 
     //UPDATE OUR CHARACTER POSITION AND IMAGE
@@ -158,6 +169,6 @@ public class player extends entity{
                 if (spriteNum == 1) {image = right1;}
                 if (spriteNum == 2) {image = right2;}}
         }
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize,null); // draws an image on the screen
+        g2.drawImage(image, screenX, screenY,null); // draws an image on the screen
     }
 }

@@ -1,18 +1,22 @@
 package object;
 
+import main.gamePanel;
+
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.Objects;
 
 public class objectDoor extends objectManager{
-    public objectDoor(){
+
+    gamePanel gp;
+
+    public objectDoor(gamePanel gp){
+        this.gp = gp;
         name = "Door";
         try{
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/door.png")));
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+            uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+        }catch (IOException e){e.printStackTrace();}
         collision = true;
     }
 }

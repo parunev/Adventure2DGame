@@ -5,6 +5,8 @@ import java.awt.event.KeyListener;
 
 public class keyHandler implements KeyListener { // used for receiving keyboard events(strokes)
     public boolean upPressed, downPressed, leftPressed, rightPressed;
+    //DEBUG
+    public boolean checkDrawTime = false;
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -13,6 +15,9 @@ public class keyHandler implements KeyListener { // used for receiving keyboard 
         if (code == KeyEvent.VK_S){downPressed = true;}
         if (code == KeyEvent.VK_A){leftPressed = true;}
         if (code == KeyEvent.VK_D){rightPressed = true;}
+
+        //DEBUG
+        if (code == KeyEvent.VK_T){checkDrawTime = !checkDrawTime;}
     }
 
     @Override
