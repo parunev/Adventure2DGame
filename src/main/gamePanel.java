@@ -23,11 +23,10 @@ public class gamePanel extends JPanel implements Runnable {
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
 
-
     //SYSTEM
     double fps = 60;
     public TileManager tileM = new TileManager(this);
-    keyHandler keyH = new keyHandler();
+    keyHandler keyH = new keyHandler(this);
     sound music = new sound();
     sound se = new sound();
     public checkCollision cCheker = new checkCollision(this);
@@ -40,6 +39,11 @@ public class gamePanel extends JPanel implements Runnable {
     public player player = new player(this, keyH);
     public objectManager[] obj = new objectManager[10];
 
+    //GAME STATE
+    public int gameState;
+    public final int playState = 1;
+    public final int pauseState = 2;
+
 
     public gamePanel(){
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
@@ -50,7 +54,11 @@ public class gamePanel extends JPanel implements Runnable {
 
     }
     //creating this method for adding other stuff in the future
-    public void setupGame(){aSetter.setObject();playMusic(0);}
+    public void setupGame(){
+        aSetter.setObject();
+        playMusic(0);
+        gameState = playState;
+    }
 
     public void startGameThread(){gameThread = new Thread(this);gameThread.start();}
 
@@ -88,7 +96,13 @@ public class gamePanel extends JPanel implements Runnable {
 
     //CHARACTER POSITION UPDATE
     public void update(){
-        player.update();
+        if (gameState == playState){
+            player.update();
+        }
+        if (gameState == pauseState){
+            //nothing
+        }
+
     }
 
     //imagine this is your paintbrush

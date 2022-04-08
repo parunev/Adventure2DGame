@@ -18,7 +18,6 @@ public class player extends entity{
 
     public final int screenX;
     public final int screenY;
-    public int hasKey = 0;
 
     public player(gamePanel gp, keyHandler keyH){
         this.gp = gp;
@@ -118,37 +117,7 @@ public class player extends entity{
     //if we are equal to 999 that means we didn't touch the object. Otherwise, simply delete the object we touched.
     public void pickUpObject(int i){
         if (i != 999){
-            String objectName = gp.obj[i].name;
-            switch (objectName){
-                case"key": // collecting keys
 
-                    gp.playSE(1);
-                    hasKey++;
-                    gp.obj[i]=null;
-                    gp.UI.showMessage("You collected a key!");
-                    break;
-                case"Door": // if we don't have key we can't open the door
-                    if (hasKey>0){
-                        gp.playSE(3);
-                        gp.obj[i]=null;
-                        hasKey--;
-                        gp.UI.showMessage("You opened a door!");
-                    }else{
-                        gp.UI.showMessage("You need to find a key!");
-                    }
-                    break;
-                case"Boots":
-                    gp.playSE(2);
-                    speed += 2;
-                    gp.obj[i] = null;
-                    gp.UI.showMessage("You received a speed up!");
-                    break;
-                case"Chest":
-                    userInterface.gameFinish = true;
-                    gp.stopMusic();
-                    gp.playSE(4);
-                    break;
-            }
         }
     }
 
