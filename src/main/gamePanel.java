@@ -27,7 +27,7 @@ public class gamePanel extends JPanel implements Runnable {
     //SYSTEM
     double fps = 60;
     public TileManager tileM = new TileManager(this);
-    keyHandler keyH = new keyHandler(this);
+    public keyHandler keyH = new keyHandler(this);
     sound music = new sound();
     sound se = new sound();
     public checkCollision cCheker = new checkCollision(this);
@@ -45,6 +45,7 @@ public class gamePanel extends JPanel implements Runnable {
     public int gameState;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int dialogState = 3;
 
 
     public gamePanel(){

@@ -9,10 +9,10 @@ public class NPC_OldMan extends entity{
 
     public NPC_OldMan(gamePanel gp) {
         super(gp);
-
         direction = "down";
         speed = 1;
         getImage();
+        setDialog();
     }
     public void getImage(){
 
@@ -25,6 +25,13 @@ public class NPC_OldMan extends entity{
         right1 = setup("oldman_right_1");
         right2 = setup("oldman_right_2");
     }
+    //DIALOG PRESETS
+    public void setDialog(){
+        dialogues[0]="Hello, lad.";
+        dialogues[1]="So you've come to this island to \nfind the treasure?";
+        dialogues[2]="I used to be a great wizard but now... \nI'm a bit too old for taking an adventure.";
+        dialogues[3]="Well, good luck on you.";
+    }
     //CHARACTER BEHAVIOR - AI
     public void setAction(){
         actionLockCounter++;
@@ -32,19 +39,16 @@ public class NPC_OldMan extends entity{
             Random random = new Random();
             int i = random.nextInt(100)+1; // pick up a number from 1 to 100
 
-            if (i <= 25){
-                direction = "up";
-            }
-            if (i > 25 && i <= 50){
-                direction = "down";
-            }
-            if (i > 50 && i <= 75){
-                direction = "left";
-            }
-            if (i > 75){
-                direction = "right";
-            }
+            //randomizing the npcs movement
+            if (i <= 25){direction = "up";}
+            if (i > 25 && i <= 50){direction = "down";}
+            if (i > 50 && i <= 75){direction = "left";}
+            if (i > 75){direction = "right";}
             actionLockCounter = 0;
         }
+    }
+    //leaving this method here because the character might do some specific stuff
+    public void speak(){
+        super.speak();
     }
 }

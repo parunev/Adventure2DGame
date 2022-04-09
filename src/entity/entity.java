@@ -1,6 +1,7 @@
 package entity;
 
 import main.gamePanel;
+import main.userInterface;
 import main.utilityTool;
 
 import javax.imageio.ImageIO;
@@ -23,11 +24,29 @@ public class entity {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
+    String[]dialogues = new String[20];
+    int dialogueIndex = 0;
 
     public entity(gamePanel gp){
         this.gp = gp;
     }
     public void setAction(){}
+    public void speak(){
+
+        if (dialogues[dialogueIndex]==null){ // if there is no text we got back to index 0
+            dialogueIndex = 0;
+        }
+        userInterface.currentDialog = dialogues[dialogueIndex];
+        dialogueIndex++;
+
+        // fixing npc dialogue direction. making it more natural.
+        switch (gp.player.direction) {
+            case "up" -> direction = "down";
+            case "down" -> direction = "up";
+            case "left" -> direction = "right";
+            case "right" -> direction = "left";
+        }
+    }
     public void update(){
         setAction();
 
