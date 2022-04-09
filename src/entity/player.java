@@ -2,25 +2,18 @@ package entity;
 
 import main.gamePanel;
 import main.keyHandler;
-import main.userInterface;
-import main.utilityTool;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
 
 public class player extends entity{
 
-    gamePanel gp;
     keyHandler keyH;
-
     public final int screenX;
     public final int screenY;
 
     public player(gamePanel gp, keyHandler keyH){
-        this.gp = gp;
+        super(gp);
         this.keyH = keyH;
 
         //FIXED POSITION AT THE CENTER OF THE SCREEN
@@ -60,19 +53,6 @@ public class player extends entity{
         right1 = setup("boy_right_1");
         right2 = setup("boy_right_2");
     }
-    public BufferedImage setup(String imageName){
-        utilityTool uTool = new utilityTool();
-        BufferedImage image = null;
-
-        try {
-            image = ImageIO.read((Objects.requireNonNull(getClass().getResourceAsStream("/res/" + imageName + ".png"))));
-            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        return image;
-    }
 
     //UPDATE OUR CHARACTER POSITION AND IMAGE
     public void update(){
@@ -92,6 +72,10 @@ public class player extends entity{
             //CHECK OBJECT COLLISION
             int objIndex = gp.cCheker.checkObject(this, true);
             pickUpObject(objIndex);
+
+            //CHECK NPC COLLISION
+            int npcIndex = gp.cCheker.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
 
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(!collisionOn){
@@ -120,9 +104,14 @@ public class player extends entity{
 
         }
     }
+    //IF YOU HIT THE NPC
+    public void interactNPC(int i){
+        if (i != 999){
+        }
+    }
 
     //your paintbrush lol :D
-    public void draw(Graphics2D g2){
+    public void draw(Graphics2D g2, gamePanel gamePanel){
         BufferedImage image = null;
         switch (direction) {  //based on direction we pick different image
             case "up" -> {

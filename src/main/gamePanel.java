@@ -1,5 +1,6 @@
 package main;
 
+import entity.entity;
 import entity.player;
 import object.objectManager;
 import tile.TileManager;
@@ -38,6 +39,7 @@ public class gamePanel extends JPanel implements Runnable {
     //ENTITY AND OBJECTS
     public player player = new player(this, keyH);
     public objectManager[] obj = new objectManager[10];
+    public entity[] npc = new entity[10];
 
     //GAME STATE
     public int gameState;
@@ -56,6 +58,7 @@ public class gamePanel extends JPanel implements Runnable {
     //creating this method for adding other stuff in the future
     public void setupGame(){
         aSetter.setObject();
+        aSetter.setNPC();
         playMusic(0);
         gameState = playState;
     }
@@ -97,7 +100,14 @@ public class gamePanel extends JPanel implements Runnable {
     //CHARACTER POSITION UPDATE
     public void update(){
         if (gameState == playState){
+            //PLAYER
             player.update();
+            //NPC
+            for (entity entity : npc) {
+                if (entity != null) {
+                    entity.update();
+                }
+            }
         }
         if (gameState == pauseState){
             //nothing
@@ -123,9 +133,15 @@ public class gamePanel extends JPanel implements Runnable {
                 objectManager.draw(g2, this);
             }
         }
+        //NPC
+        for (entity entity : npc) {
+            if (entity != null) {
+                entity.draw(g2, this);
+            }
+        }
 
         //PLAYER
-        player.draw(g2);
+        player.draw(g2, this);
 
         //USER INTERFACE
         userInterface.draw(g2);
