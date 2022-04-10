@@ -20,6 +20,7 @@ public class eventHandler {
         eventRectDefaultY = eventRect.y;
     }
 
+    //EVENT POSITION
     public void checkEvent(){
         if (hit(27, 16, "right")){damagePit(gp.dialogState);}
         if (hit(23, 12,"up")){healingPool(gp.dialogState);}
