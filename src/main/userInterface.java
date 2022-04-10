@@ -1,6 +1,10 @@
 package main;
 
+import object.objectHeart;
+import object.objectManager;
+
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -9,6 +13,9 @@ public class userInterface {
     static gamePanel gp;
     public static Graphics2D g2;
     static Font pixelFont;
+    static BufferedImage heart_full;
+    static BufferedImage heart_half;
+    static BufferedImage heart_blank;
     public static boolean messageOn = false;
     public static String message = "";
     static int messageCounter = 0;
@@ -27,6 +34,12 @@ public class userInterface {
             e.printStackTrace();
         }
 
+        // CREATE HUD OBJECT
+        objectManager heart = new objectHeart(gp);
+        heart_full = heart.image;
+        heart_half = heart.image2;
+        heart_blank = heart.image3;
+
     }
     //RECEIVING A TEXT
     public void showMessage(String text){
@@ -43,19 +56,57 @@ public class userInterface {
         if (gp.gameState == gp.titleState){
             drawTitleScreen();
         }
+
         //PLAY STATE
         if (gp.gameState == gp.playState){
+            drawPlayerLife(); // displaying while playing
             //do playState stuff later
         }
+
         //PAUSE STATE
         if (gp.gameState == gp.pauseState){
+            drawPlayerLife(); // still displaying while pausing
             drawPauseScreen();
         }
+
         //DIALOG STATE
         if(gp.gameState == gp.dialogState){
+            drawPlayerLife(); // still displaying while talking to npcs
             drawDialogScreen();
         }
     }
+
+    //DRAWING PLAYER HEARTS
+    public static void drawPlayerLife(){
+
+        int x = gp.tileSize/2;
+        int y = gp.tileSize/2;
+        int i = 0;
+
+        //DRAW MAX LIFE
+        while (i < gp.player.maxLife/2){
+            g2.drawImage(heart_blank, x, y, null);
+            i++;
+            x += gp.tileSize;
+        }
+
+        //RESET
+        x = gp.tileSize/2;
+        i = 0;
+
+        //DRAW CURRENT LIFE
+        while (i < gp.player.life){
+            g2.drawImage(heart_half, x,y, null);
+            i++;
+            if (i < gp.player.life){
+                g2.drawImage(heart_full, x,y,null);
+            }
+            i++;
+            x += gp.tileSize;
+        }
+
+    }
+
     //SETTING UP TITLE SCREEN
     public static void drawTitleScreen(){
         //TITLE BACKGROUND COLOR

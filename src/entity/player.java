@@ -39,6 +39,10 @@ public class player extends entity{
         worldY = gp.tileSize * 21;
         speed = 4;
         direction ="down";
+
+        //PLAYER STATUS
+        maxLife = 6; // 3 hearts = 6, 1half + 1half = 1 heart
+        life = maxLife; //starting life
     }
 
     //CHARACTER SPRITES
