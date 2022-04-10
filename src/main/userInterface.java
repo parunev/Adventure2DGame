@@ -1,12 +1,14 @@
 package main;
 
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class userInterface {
 
     static gamePanel gp;
     public static Graphics2D g2;
-    static Font Dialog_30, Dialog_60;
+    static Font pixelFont;
     public static boolean messageOn = false;
     public static String message = "";
     static int messageCounter = 0;
@@ -16,8 +18,13 @@ public class userInterface {
     public userInterface(gamePanel gp){
         userInterface.gp = gp;
 
-        Dialog_30 = new Font("Dialog",Font.BOLD, 30); // finishing the instantiation before the game-loop start
-        Dialog_60 = new Font("Dialog",Font.BOLD, 60);
+        try{
+            InputStream is = getClass().getResourceAsStream("/res/font.ttf");
+            pixelFont = Font.createFont(Font.TRUETYPE_FONT, is);
+        }catch (FontFormatException | IOException e){
+            e.printStackTrace();
+        }
+
     }
     //RECEIVING A TEXT
     public void showMessage(String text){
@@ -28,7 +35,7 @@ public class userInterface {
     //SETTING UP PAUSE
     public static void draw(Graphics2D g2){
         userInterface.g2 = g2;
-        g2.setFont(Dialog_30);
+        g2.setFont(pixelFont);
         g2.setColor(Color.white);
 
         //PLAY STATE
