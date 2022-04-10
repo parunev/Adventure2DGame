@@ -33,6 +33,7 @@ public class gamePanel extends JPanel implements Runnable {
     public checkCollision cCheker = new checkCollision(this);
     public assetSetter aSetter = new assetSetter(this);
     public userInterface UI = new userInterface(this);
+    public eventHandler eHandler = new eventHandler(this);
     Thread gameThread;
 
 

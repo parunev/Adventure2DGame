@@ -81,6 +81,11 @@ public class player extends entity{
             int npcIndex = gp.cCheker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
 
+            //CHECK EVENT
+            gp.eHandler.checkEvent();
+
+            gp.keyH.enterPressed = false;
+
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(!collisionOn){
                 switch (direction) {
@@ -116,7 +121,6 @@ public class player extends entity{
                 gp.npc[i].speak();
             }
         }
-        gp.keyH.enterPressed = false;
     }
 
     //your paintbrush lol :D
