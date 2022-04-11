@@ -124,7 +124,7 @@ public class player extends entity{
     }
 
     //your paintbrush lol :D
-    public void draw(Graphics2D g2, gamePanel gamePanel){
+    public void draw(Graphics2D g2){
         BufferedImage image = null;
         switch (direction) {  //based on direction we pick different image
             case "up" -> {

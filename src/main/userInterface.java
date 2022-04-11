@@ -1,7 +1,7 @@
 package main;
 
+import entity.entity;
 import object.objectHeart;
-import object.objectManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -35,7 +35,7 @@ public class userInterface {
         }
 
         // CREATE HUD OBJECT
-        objectManager heart = new objectHeart(gp);
+        entity heart = new objectHeart(gp);
         heart_full = heart.image;
         heart_half = heart.image2;
         heart_blank = heart.image3;

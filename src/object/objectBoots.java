@@ -2,22 +2,12 @@ package object;
 
 import main.gamePanel;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.util.Objects;
-
-public class objectBoots extends objectManager{
-
-    gamePanel gp;
+public class objectBoots extends entity.entity {
 
     public objectBoots(gamePanel gp){
-        this.gp = gp;
+        super(gp);
 
         name = "Boots";
-        try{
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/res/boots.png")));
-            uTool.scaleImage(image, gp.tileSize, gp.tileSize);
-
-        }catch (IOException e){e.printStackTrace();}
+        down1 = setup("boots");
     }
 }
