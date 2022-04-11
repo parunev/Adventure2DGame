@@ -81,6 +81,10 @@ public class player extends entity{
             int npcIndex = gp.cCheker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
 
+            //CHECK MONSTER COLLISION
+            int monsterIndex = gp.cCheker.checkEntity(this, gp.monster);
+            contactMonster(monsterIndex);
+
             //CHECK EVENT
             gp.eHandler.checkEvent();
 
@@ -105,6 +109,14 @@ public class player extends entity{
                 spriteCounter = 0;
             }
         }
+        //This needs to be outside of key if-statement
+        if (invincible){
+            invincibleCounter++;
+            if (invincibleCounter>60){ // we can receive damage every 1 second
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
 
     //if we are equal to 999 that means we didn't touch the object. Otherwise, simply delete the object we touched.
@@ -119,6 +131,16 @@ public class player extends entity{
             if (gp.keyH.enterPressed){
                 gp.gameState = gp.dialogState;
                 gp.npc[i].speak();
+            }
+        }
+    }
+    //PLAYER RECEIVES DMG CONTACTING THE MONSTER
+    public void contactMonster(int i){
+        if (i != 999){
+            // player receives damage only if he's not invincible
+            if (!invincible){
+                life -=1;
+                invincible = true;
             }
         }
     }
@@ -140,6 +162,20 @@ public class player extends entity{
                 if (spriteNum == 1) {image = right1;}
                 if (spriteNum == 2) {image = right2;}}
         }
+
+        //VISUAL EFFECT TO INVINCIBLE STATE - TRANSPARENCY
+        if (invincible){
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+        }
+
         g2.drawImage(image, screenX, screenY,null); // draws an image on the screen
+
+        //RESET ALPHA
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
+        //DEBUG
+//        g2.setFont(new Font("Arial", Font.PLAIN, 26));
+//        g2.setColor(Color.white);
+//        g2.drawString("Invincible counter: "+invincibleCounter,10,400);
     }
 }

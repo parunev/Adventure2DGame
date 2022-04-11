@@ -24,11 +24,14 @@ public class entity {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
+    public boolean invincible = false;
+    public int invincibleCounter = 0;
     String[]dialogues = new String[20];
     int dialogueIndex = 0;
     public BufferedImage image, image2, image3;
     public String name;
     public boolean collision = false;
+    public int type; //0 player, 1 npc, 2 monster
 
     //CHARACTER STATUS
     public int maxLife;
@@ -54,13 +57,23 @@ public class entity {
             case "right" -> direction = "left";
         }
     }
+    //CHECK COLLISION BETWEEN ENTITIES
     public void update(){
         setAction();
 
         collisionOn = false;
         gp.cCheker.checkTile(this);
         gp.cCheker.checkObject(this, false);
-        gp.cCheker.checkPlayer(this);
+        gp.cCheker.checkEntity(this, gp.npc);
+        gp.cCheker.checkEntity(this, gp.monster);
+        boolean contactPlayer = gp.cCheker.checkPlayer(this);
+
+        if (this.type == 2 && contactPlayer){
+            if (!gp.player.invincible){ // we can give damage
+                gp.player.life -=1;
+                gp.player.invincible = true;
+            }
+        }
 
         if(!collisionOn){
             switch (direction) {
