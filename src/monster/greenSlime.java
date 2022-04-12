@@ -12,7 +12,7 @@ public class greenSlime extends entity.entity{
         type = 2;
         name = "Green Slime";
         speed = 1;
-        maxLife = 4;
+        maxLife = 20;
         life = maxLife;
 
         //SOLID AREA
@@ -54,6 +54,12 @@ public class greenSlime extends entity.entity{
             if (i > 75){direction = "right";}
             actionLockCounter = 0;
         }
+    }
+    public void damageReaction(){
+
+        //WHEN THE MONSTER RECEIVES DAMAGE ITS START MOVING IN THE DIRECTION PLAYER IS FACING
+        actionLockCounter = 0;
+        direction = gp.player.direction;
     }
 
 }

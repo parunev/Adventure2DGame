@@ -194,13 +194,16 @@ public class player extends entity{
             if (i != 999){
                     gp.gameState = gp.dialogState;
                     gp.npc[i].speak();
-                }else{attacking = true;}}}
+                }else{
+                gp.playSE(7);
+                attacking = true;}}}
 
     //PLAYER RECEIVES DMG CONTACTING THE MONSTER
     public void contactMonster(int i){
         if (i != 999){
             // player receives damage only if he's not invincible
             if (!invincible){
+                gp.playSE(6);
                 life -=1;
                 invincible = true;
             }
@@ -210,11 +213,13 @@ public class player extends entity{
     public void damageMonster(int i){
         if (i != 999){
             if (!gp.monster[i].invincible){
+                gp.playSE(5);
                 gp.monster[i].life -=1;
                 gp.monster[i].invincible = true;
+                gp.monster[i].damageReaction();
 
                 if (gp.monster[i].life <= 0){
-                    gp.monster[i] = null;
+                    gp.monster[i].dying = true;
                 }
             }
         }
