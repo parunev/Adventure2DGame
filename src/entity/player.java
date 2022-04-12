@@ -2,6 +2,8 @@ package entity;
 
 import main.gamePanel;
 import main.keyHandler;
+import object.objectShield;
+import object.objectSword;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,6 +13,7 @@ public class player extends entity{
     keyHandler keyH;
     public final int screenX;
     public final int screenY;
+    public boolean attackCanceled = false;
 
     public player(gamePanel gp, keyHandler keyH){
         super(gp);
@@ -46,9 +49,21 @@ public class player extends entity{
         direction ="down";
 
         //PLAYER STATUS
+        level = 1;
         maxLife = 6; // 3 hearts = 6, 1half + 1half = 1 heart
         life = maxLife; //starting life
+        strength = 1; // the more strength he has, the more damage he gives
+        dexterity = 1; // the more dexterity he has, the less damage he receives
+        exp = 0;
+        nextLevelEXP = 5;
+        coin = 0;
+        currentWeapon = new objectSword(gp);
+        currentShield = new objectShield(gp);
+        attack = getAttack(); // the total attack value is decided by strength and weapon
+        defence = getDefence(); // the total defence value is decided by dexterity and shield
     }
+    public int getAttack(){return attack = strength * currentWeapon.attackValue;}
+    public int getDefence(){return defence = dexterity * currentShield.defenceValue;}
 
     //CHARACTER SPRITES
     public void getPlayerImage(){
@@ -115,6 +130,13 @@ public class player extends entity{
                     case "right" -> worldX += speed;
                 }
             }
+            if (keyH.enterPressed && !attackCanceled){
+                gp.playSE(7);
+                attacking = true;
+                spriteCounter = 0;
+            }
+
+            attackCanceled = false;
             gp.keyH.enterPressed = false;
 
             spriteCounter++;  // the sprite counter only increase if one of the above is true. etc. the character is in still position
@@ -192,11 +214,10 @@ public class player extends entity{
     public void interactNPC(int i){
         if (gp.keyH.enterPressed){
             if (i != 999){
-                    gp.gameState = gp.dialogState;
-                    gp.npc[i].speak();
-                }else{
-                gp.playSE(7);
-                attacking = true;}}}
+                attackCanceled = true;
+                gp.gameState = gp.dialogState;
+                gp.npc[i].speak();
+                }}}
 
     //PLAYER RECEIVES DMG CONTACTING THE MONSTER
     public void contactMonster(int i){

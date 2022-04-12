@@ -48,6 +48,20 @@ public class entity {
     public int speed;
     public int maxLife;
     public int life;
+    public int level;
+    public int strength;
+    public int dexterity;
+    public int attack;
+    public int defence;
+    public int exp;
+    public int nextLevelEXP;
+    public int coin;
+    public entity currentWeapon;
+    public entity currentShield;
+
+    //ITEM ATTRIBUTES
+    public int attackValue;
+    public int defenceValue;
 
 
     public entity(gamePanel gp){
