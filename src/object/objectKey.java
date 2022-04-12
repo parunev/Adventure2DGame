@@ -8,6 +8,6 @@ public class objectKey extends entity.entity{
         super(gp);
 
         name = "key";
-        down1 = setup("key");
+        down1 = setup("key", gp.tileSize, gp.tileSize);
     }
 }

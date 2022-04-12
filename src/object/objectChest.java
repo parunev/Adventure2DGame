@@ -8,6 +8,6 @@ public class objectChest extends entity.entity {
         super(gp);
 
         name = "Chest";
-        down1 = setup("chest");
+        down1 = setup("chest", gp.tileSize, gp.tileSize);
     }
 }

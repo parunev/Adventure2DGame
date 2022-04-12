@@ -8,6 +8,6 @@ public class objectBoots extends entity.entity {
         super(gp);
 
         name = "Boots";
-        down1 = setup("boots");
+        down1 = setup("boots", gp.tileSize, gp.tileSize);
     }
 }
