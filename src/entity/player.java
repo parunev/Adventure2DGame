@@ -2,6 +2,7 @@ package entity;
 
 import main.gamePanel;
 import main.keyHandler;
+import main.userInterface;
 import object.objectShield;
 import object.objectSword;
 
@@ -15,6 +16,7 @@ public class player extends entity{
     public final int screenY;
     public boolean attackCanceled = false;
 
+    //MAIN PLAYER
     public player(gamePanel gp, keyHandler keyH){
         super(gp);
         this.keyH = keyH;
@@ -77,6 +79,8 @@ public class player extends entity{
         right1 = setup("boy_right_1", gp.tileSize, gp.tileSize);
         right2 = setup("boy_right_2", gp.tileSize, gp.tileSize);
     }
+
+    //CHARACTER ATTACK SRPITES
     public void getPlayerAttackImage(){
         attackUp1 = setup("boy_attack_up_1", gp.tileSize, gp.tileSize*2);
         attackUp2 = setup("boy_attack_up_2", gp.tileSize, gp.tileSize*2);
@@ -159,6 +163,7 @@ public class player extends entity{
         }
     }
 
+    //DAMAGE BETWEEN CHARACTER AND MONSTER
     public void attacking(){
         spriteCounter++;
 
@@ -203,13 +208,13 @@ public class player extends entity{
         }
     }
 
-
     //if we are equal to 999 that means we didn't touch the object. Otherwise, simply delete the object we touched.
     public void pickUpObject(int i){
         if (i != 999){
 
         }
     }
+
     //IF YOU HIT THE NPC
     public void interactNPC(int i){
         if (gp.keyH.enterPressed){
@@ -225,24 +230,58 @@ public class player extends entity{
             // player receives damage only if he's not invincible
             if (!invincible){
                 gp.playSE(6);
-                life -=1;
+
+                int damage = gp.monster[i].attack - defence;
+                if (damage<0){ //in case monster defence is greater than players attack we change all the negatives to zero
+                    damage = 0;
+                }
+
+                life -=damage;
                 invincible = true;
             }
         }
     }
+
     //MONSTER RECEIVES DMG
     public void damageMonster(int i){
         if (i != 999){
             if (!gp.monster[i].invincible){
                 gp.playSE(5);
-                gp.monster[i].life -=1;
+
+
+                int damage = attack - gp.monster[i].defence;
+                if (damage<0){ //in case monster defence is greater than players attack we change all the negatives to zero
+                    damage = 0;
+                }
+
+                gp.monster[i].life -= damage;
+                userInterface.addMessage(damage + " damage!");
                 gp.monster[i].invincible = true;
                 gp.monster[i].damageReaction();
 
                 if (gp.monster[i].life <= 0){
                     gp.monster[i].dying = true;
+                    userInterface.addMessage("Killed the " + gp.monster[i].name + "!");
+                    userInterface.addMessage("EXP + "+gp.monster[i].exp);
+                    exp += gp.monster[i].exp;
+                    checkLevelUp();
                 }
             }
+        }
+    }
+    public void checkLevelUp(){
+        if (exp >= nextLevelEXP){
+            level++;
+            nextLevelEXP = nextLevelEXP*2;
+            maxLife += 2;
+            strength++;
+            dexterity++;
+            attack = getAttack();
+            defence = getDefence();
+            gp.playSE(8);
+            gp.gameState = gp.dialogState;
+            userInterface.currentDialog = "YOU ARE LEVEL " + level + " NOW!\n"
+                    + "YOU FEEL STRONGER!";
         }
     }
 

@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class userInterface {
 
@@ -17,8 +18,8 @@ public class userInterface {
     static BufferedImage heart_half;
     static BufferedImage heart_blank;
     public static boolean messageOn = false;
-    public static String message = "";
-    static int messageCounter = 0;
+    public static ArrayList<String> message = new ArrayList<>();
+    public static ArrayList<Integer> messageCounter = new ArrayList<>();
     public static boolean gameFinish = false;
     public static String currentDialog = "";
     public static int commandNum = 0;
@@ -41,10 +42,11 @@ public class userInterface {
         heart_blank = heart.image3;
 
     }
-    //RECEIVING A TEXT
-    public void showMessage(String text){
-        message = text;
-        messageOn = true;
+
+    public static void addMessage(String text){
+        message.add(text);
+        messageCounter.add(0);
+
     }
 
     //SETTING UP PAUSE
@@ -60,7 +62,7 @@ public class userInterface {
         //PLAY STATE
         if (gp.gameState == gp.playState){
             drawPlayerLife(); // displaying while playing
-            //do playState stuff later
+            drawMessage();
         }
 
         //PAUSE STATE
@@ -110,6 +112,31 @@ public class userInterface {
             x += gp.tileSize;
         }
 
+    }
+    public static void drawMessage(){
+        int messageX = gp.tileSize;
+        int messageY = gp.tileSize*4;
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,28F));
+        for (int i = 0; i < message.size() ; i++) {
+            if (message.get(i) != null){
+                //shadow
+                g2.setColor(Color.black);
+                g2.drawString(message.get(i),messageX+2,messageY+2);
+                //text
+                g2.setColor(Color.WHITE);
+                g2.drawString(message.get(i),messageX,messageY);
+
+                int counter = messageCounter.get(i)+1; // message counter++
+                messageCounter.set(i,counter); //set the counter to the array
+                messageY+=50;
+
+                if (messageCounter.get(i) > 180){
+                    message.remove(i);
+                    messageCounter.remove(i);
+                }
+            }
+        }
     }
     //SETTING UP TITLE SCREEN
     public static void drawTitleScreen(){
