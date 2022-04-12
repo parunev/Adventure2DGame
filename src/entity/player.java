@@ -269,6 +269,8 @@ public class player extends entity{
             }
         }
     }
+
+    //LEVEL UP SYSTEM - INCREASE LEVEL, HEALTH, STRENGTH, DEXTERITY
     public void checkLevelUp(){
         if (exp >= nextLevelEXP){
             level++;

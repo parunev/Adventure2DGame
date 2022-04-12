@@ -11,10 +11,12 @@ public class assetSetter {
         this.gp = gp;
     }
 
-    //setting object locations
+    //ADDING OBJECTS TO THE MAP
     public void setObject(){
 
     }
+
+    //ADDING NPCS TO THE MAP
     public void setNPC(){
         gp.npc[0] = new NPC_OldMan(gp);
         gp.npc[0].worldX = gp.tileSize*21;
@@ -22,6 +24,7 @@ public class assetSetter {
 
     }
 
+    //ADDING MONSTERS TO THE MAP
     public void setMonster(){
 
         int i = 0;

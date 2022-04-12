@@ -28,6 +28,7 @@ public class greenSlime extends entity.entity{
 
         getImage();
     }
+
     //LOADING AND SCALING
     public void getImage(){
 
@@ -58,6 +59,8 @@ public class greenSlime extends entity.entity{
             actionLockCounter = 0;
         }
     }
+
+    //BEHAVIOUR
     public void damageReaction(){
 
         //WHEN THE MONSTER RECEIVES DAMAGE ITS START MOVING IN THE DIRECTION PLAYER IS FACING

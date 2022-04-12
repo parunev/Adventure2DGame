@@ -85,6 +85,8 @@ public class eventHandler {
 
         return hit;
     }
+
+    //DAMAGE PIT EVENT
     public void damagePit(int col, int row, int gameState){
         gp.gameState = gameState;
         gp.playSE(6);
@@ -94,6 +96,7 @@ public class eventHandler {
         canTouchEvent = false;
     }
 
+    //HEALING POOL EVENT
     public void healingPool(int col, int row,int gameState){
         if (gp.keyH.enterPressed){
             gp.gameState = gameState;

@@ -43,13 +43,14 @@ public class userInterface {
 
     }
 
+    //ADDING MESSAGES
     public static void addMessage(String text){
         message.add(text);
         messageCounter.add(0);
 
     }
 
-    //SETTING UP PAUSE
+    //SETTING UP GAME STATES
     public static void draw(Graphics2D g2){
         userInterface.g2 = g2;
         g2.setFont(pixelFont);
@@ -113,6 +114,8 @@ public class userInterface {
         }
 
     }
+
+    //SETTING UP DISAPPEARING MESSAGES
     public static void drawMessage(){
         int messageX = gp.tileSize;
         int messageY = gp.tileSize*4;
@@ -138,6 +141,7 @@ public class userInterface {
             }
         }
     }
+
     //SETTING UP TITLE SCREEN
     public static void drawTitleScreen(){
         //TITLE BACKGROUND COLOR
@@ -191,6 +195,7 @@ public class userInterface {
         }
 
     }
+
     //SETTING UP PAUSE
     public static void drawPauseScreen(){
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 60));
@@ -200,6 +205,7 @@ public class userInterface {
 
         g2.drawString(text, x, y);
     }
+
     //SETTING UP DIALOGUE
     public static void drawDialogScreen(){
 
@@ -219,6 +225,8 @@ public class userInterface {
             y+=40;
         }
     }
+
+    //SETTING UP CHARACTER STATS
     public static void drawCharacterScreen(){
 
         //CREATE A FRAME
@@ -329,6 +337,9 @@ public class userInterface {
         g2.drawRoundRect(x+5, y+5,width-10,height-10,25,25);
 
     }
+
+
+    //FIXED METHODS
     public static int getXFForCenteredText(String text){
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return gp.screenWidth/2 - length/2;
