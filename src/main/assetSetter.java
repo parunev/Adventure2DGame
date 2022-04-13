@@ -2,6 +2,10 @@ package main;
 
 import entity.NPC_OldMan;
 import monster.greenSlime;
+import object.objectAxe;
+import object.objectBlueShield;
+import object.objectKey;
+import object.objectPotion;
 
 public class assetSetter {
 
@@ -14,6 +18,30 @@ public class assetSetter {
     //ADDING OBJECTS TO THE MAP
     public void setObject(){
 
+        int i = 0;
+        gp.obj[i] = new objectKey(gp);
+        gp.obj[i].worldX = gp.tileSize*25;
+        gp.obj[i].worldY = gp.tileSize*23;
+        i++;
+        gp.obj[i] = new objectKey(gp);
+        gp.obj[i].worldX = gp.tileSize*21;
+        gp.obj[i].worldY = gp.tileSize*19;
+        i++;
+        gp.obj[i] = new objectKey(gp);
+        gp.obj[i].worldX = gp.tileSize*26;
+        gp.obj[i].worldY = gp.tileSize*21;
+        i++;
+        gp.obj[i] = new objectAxe(gp);
+        gp.obj[i].worldX = gp.tileSize*33;
+        gp.obj[i].worldY = gp.tileSize*21;
+        i++;
+        gp.obj[i] = new objectBlueShield(gp);
+        gp.obj[i].worldX = gp.tileSize*35;
+        gp.obj[i].worldY = gp.tileSize*21;
+        i++;
+        gp.obj[i] = new objectPotion(gp);
+        gp.obj[i].worldX = gp.tileSize*22;
+        gp.obj[i].worldY = gp.tileSize*27;
     }
 
     //ADDING NPCS TO THE MAP

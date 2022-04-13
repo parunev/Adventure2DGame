@@ -43,7 +43,6 @@ public class entity {
     public int hpBarCounter = 0;
 
     //CHARACTER ATTRIBUTES
-    public int type; //0 player, 1 npc, 2 monster
     public String name;
     public int speed;
     public int maxLife;
@@ -64,12 +63,24 @@ public class entity {
     public int defenceValue;
     public String description = "";
 
+    //TYPE
+    public int type; //0 player, 1 npc, 2 monster
+    public final int typePlayer = 0;
+    public final int typeNPC = 1;
+    public final int typeMonster = 2;
+    public final int typeSword = 3;
+    public final int typeAxe = 4;
+    public final int typeShield = 5;
+    public final int typeConsumable = 6;
+
 
     public entity(gamePanel gp){
         this.gp = gp;
     }
     public void setAction(){}
     public void damageReaction(){}
+
+    //DIALOGUE SETUP
     public void speak(){
 
         if (dialogues[dialogueIndex]==null){ // if there is no text we got back to index 0
@@ -87,6 +98,9 @@ public class entity {
         }
     }
 
+    //CHECK CONSUMABLE
+    public void use(entity entity){}
+
     //CHECK COLLISION BETWEEN ENTITIES
     public void update(){
         setAction();
@@ -98,7 +112,7 @@ public class entity {
         gp.cCheker.checkEntity(this, gp.monster);
         boolean contactPlayer = gp.cCheker.checkPlayer(this);
 
-        if (this.type == 2 && contactPlayer){
+        if (this.type == typeMonster && contactPlayer){
             if (!gp.player.invincible){ // we can give damage
                 gp.playSE(6);
 
@@ -137,6 +151,8 @@ public class entity {
             }
         }
     }
+
+    //VISUALIZE
     public void draw(Graphics2D g2){
         BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
@@ -198,6 +214,8 @@ public class entity {
             changeAlpha(g2, 1F);
         }
     }
+
+    //BLINKING DYING ANIMATION SETUP
     public void dyingAnimation(Graphics2D g2){
         dyingCounter++;
         int i = 5;
@@ -218,10 +236,11 @@ public class entity {
         }
 
     }
+
+    //FIXED METHODS
     public void changeAlpha(Graphics2D g2, float alphaValue){
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
     }
-
     public BufferedImage setup(String imageName, int width, int height){
         utilityTool uTool = new utilityTool();
         BufferedImage image = null;

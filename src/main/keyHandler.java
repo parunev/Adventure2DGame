@@ -30,6 +30,7 @@ public class keyHandler implements KeyListener {
         //CHARACTER STATE
         else if (gp.gameState == gp.characterState){characterState(code);}
     }
+
     public void titleState(int code){
         if (code == KeyEvent.VK_W){ // up menu
             userInterface.commandNum--;
@@ -119,6 +120,9 @@ public class keyHandler implements KeyListener {
                 userInterface.slotCol++;
                 gp.playSE(9);
             }
+        }
+        if (code == KeyEvent.VK_ENTER){
+            gp.player.selectItem();
         }
     }
 
