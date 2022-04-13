@@ -373,7 +373,7 @@ public class userInterface {
         int dFrameY = frameY + frameHeight;
         int dFrameWidth = frameWidth;
         int dFrameHeight = gp.tileSize*3;
-        drawSubWindows(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+
 
         //DRAW DESCRIPTION TEXT
         int textX = dFrameX+20;
@@ -382,6 +382,9 @@ public class userInterface {
 
         int itemIndex = getItemIndexOnSlot();
         if (itemIndex < gp.player.inventory.size()){
+
+            drawSubWindows(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+
             for (String line : gp.player.inventory.get(itemIndex).description.split("\n")) {
                 g2.drawString(line, textX, textY);
                 textY+=32;
