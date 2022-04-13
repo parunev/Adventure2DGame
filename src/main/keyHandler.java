@@ -90,7 +90,36 @@ public class keyHandler implements KeyListener {
     }
 
     public void characterState(int code){
-        if (code == KeyEvent.VK_C){gp.gameState = gp.playState;}
+        if (code == KeyEvent.VK_C){
+            gp.gameState = gp.playState;
+        }
+        if (code == KeyEvent.VK_W){
+            if (userInterface.slotRow != 0){
+                userInterface.slotRow--;
+                gp.playSE(9);
+            }
+
+        }
+        if (code == KeyEvent.VK_A){
+            if (userInterface.slotCol != 0){
+                userInterface.slotCol--;
+                gp.playSE(9);
+            }
+
+        }
+        if (code == KeyEvent.VK_S){
+            if (userInterface.slotRow != 3){
+                userInterface.slotRow++;
+                gp.playSE(9);
+            }
+
+        }
+        if (code == KeyEvent.VK_D){
+            if (userInterface.slotCol != 4){
+                userInterface.slotCol++;
+                gp.playSE(9);
+            }
+        }
     }
 
     @Override

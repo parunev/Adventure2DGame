@@ -62,6 +62,7 @@ public class entity {
     //ITEM ATTRIBUTES
     public int attackValue;
     public int defenceValue;
+    public String description = "";
 
 
     public entity(gamePanel gp){
@@ -85,6 +86,7 @@ public class entity {
             case "right" -> direction = "left";
         }
     }
+
     //CHECK COLLISION BETWEEN ENTITIES
     public void update(){
         setAction();

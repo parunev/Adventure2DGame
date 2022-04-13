@@ -3,11 +3,13 @@ package entity;
 import main.gamePanel;
 import main.keyHandler;
 import main.userInterface;
+import object.objectKey;
 import object.objectShield;
 import object.objectSword;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class player extends entity{
 
@@ -15,6 +17,8 @@ public class player extends entity{
     public final int screenX;
     public final int screenY;
     public boolean attackCanceled = false;
+    public ArrayList<entity> inventory = new ArrayList<>();
+    public final int inventorySize = 20;
 
     //MAIN PLAYER
     public player(gamePanel gp, keyHandler keyH){
@@ -41,6 +45,7 @@ public class player extends entity{
         setDefaultValue();
         getPlayerImage();
         getPlayerAttackImage();
+        setItems();
     }
 
     //DEFAULT DIRECTION OF THE CHARACTER
@@ -63,6 +68,11 @@ public class player extends entity{
         currentShield = new objectShield(gp);
         attack = getAttack(); // the total attack value is decided by strength and weapon
         defence = getDefence(); // the total defence value is decided by dexterity and shield
+    }
+    public void setItems(){
+        inventory.add(currentWeapon);
+        inventory.add(currentShield);
+        inventory.add(new objectKey(gp));
     }
     public int getAttack(){return attack = strength * currentWeapon.attackValue;}
     public int getDefence(){return defence = dexterity * currentShield.defenceValue;}

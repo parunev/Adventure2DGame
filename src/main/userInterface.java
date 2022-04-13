@@ -23,6 +23,9 @@ public class userInterface {
     public static boolean gameFinish = false;
     public static String currentDialog = "";
     public static int commandNum = 0;
+    public static int slotCol = 0;
+    public static int slotRow = 0;
+
 
     public userInterface(gamePanel gp){
         userInterface.gp = gp;
@@ -81,6 +84,7 @@ public class userInterface {
         //CHARACTER STATE
         if (gp.gameState == gp.characterState){
             drawCharacterScreen();
+            drawInventory();
         }
     }
 
@@ -325,6 +329,70 @@ public class userInterface {
         g2.drawImage(gp.player.currentShield.down1, tailX - gp.tileSize, textY-32, null);
 
     }
+
+    //SETTING UP INVENTORY
+    public static void drawInventory(){
+
+        //FRAME
+        int frameX = gp.tileSize*9;
+        int frameY = gp.tileSize;
+        int frameWidth = gp.tileSize*6;
+        int frameHeight= gp.tileSize*5;
+        drawSubWindows(frameX, frameY, frameWidth, frameHeight);
+
+        //SLOT
+        final int slotXStart = frameX +20;
+        final int slotYStart = frameY +20;
+        int slotX = slotXStart;
+        int slotY = slotYStart;
+        int slotSize = gp.tileSize+3;
+
+        // DRAW PLAYER ITEMS
+        for (int i = 0; i <gp.player.inventory.size() ; i++) {
+            g2.drawImage(gp.player.inventory.get(i).down1,slotX,slotY,null);
+            slotX+=slotSize;
+            if (i == 4 || i == 9 || i == 14 ){
+                slotX = slotXStart;
+                slotY += slotSize;
+            }
+        }
+
+        //CURSOR
+        int cursorX = slotXStart + (slotSize*slotCol);
+        int cursorY = slotYStart + (slotSize*slotRow);
+        int cursorWidth = gp.tileSize;
+        int cursorHeight = gp.tileSize;
+
+        //DRAW CURSOR
+        g2.setColor(Color.white);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight,10,10);
+
+        //DESCRIPTION FRAME
+        int dFrameX = frameX;
+        int dFrameY = frameY + frameHeight;
+        int dFrameWidth = frameWidth;
+        int dFrameHeight = gp.tileSize*3;
+        drawSubWindows(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+
+        //DRAW DESCRIPTION TEXT
+        int textX = dFrameX+20;
+        int textY = dFrameY+gp.tileSize;
+        g2.setFont(g2.getFont().deriveFont(28F));
+
+        int itemIndex = getItemIndexOnSlot();
+        if (itemIndex < gp.player.inventory.size()){
+            for (String line : gp.player.inventory.get(itemIndex).description.split("\n")) {
+                g2.drawString(line, textX, textY);
+                textY+=32;
+            }
+        }
+    }
+
+    //FIXED METHODS
+    public static int getItemIndexOnSlot(){
+        return slotCol + (slotRow*5);
+    }
     public static void drawSubWindows(int x, int y, int width, int height){
 
         Color c = new Color(0, 0,0,210 ); //setting up customized rgb color, the alpha value is adjusting the opacity
@@ -337,9 +405,6 @@ public class userInterface {
         g2.drawRoundRect(x+5, y+5,width-10,height-10,25,25);
 
     }
-
-
-    //FIXED METHODS
     public static int getXFForCenteredText(String text){
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return gp.screenWidth/2 - length/2;
