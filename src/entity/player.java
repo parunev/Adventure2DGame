@@ -270,7 +270,7 @@ public class player extends entity{
             if (!invincible){
                 gp.playSE(6);
 
-                int damage = gp.monster[i].attack - defence;
+                int damage = gp.monster[i].attack;
                 if (damage<0){ //in case monster defence is greater than players attack we change all the negatives to zero
                     damage = 0;
                 }

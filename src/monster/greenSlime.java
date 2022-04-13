@@ -14,7 +14,7 @@ public class greenSlime extends entity.entity{
         speed = 1;
         maxLife = 6;
         life = maxLife;
-        attack = 3;
+        attack = 2;
         defence = 0;
         exp = 2;
 
