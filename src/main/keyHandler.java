@@ -2,12 +2,14 @@ package main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 // used for receiving keyboard events(strokes)
 public class keyHandler implements KeyListener {
     gamePanel gp;
     public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+
     //DEBUG
-    public boolean checkDrawTime = false;
+    public boolean showDebugText = false;
 
     public keyHandler(gamePanel gp){
         this.gp = gp;
@@ -64,7 +66,17 @@ public class keyHandler implements KeyListener {
         if (code == KeyEvent.VK_C){ gp.gameState = gp.characterState;} // character status button
 
         //DEBUG
-        if (code == KeyEvent.VK_T){checkDrawTime = !checkDrawTime;} // showing draw time
+        if (code == KeyEvent.VK_T){ // showing debug info
+           if (!showDebugText){
+               showDebugText = true;
+           }else{
+               showDebugText = false;
+           }
+        }
+        //RELOAD MAP WHEN UPDATED
+        if (code == KeyEvent.VK_R){
+            gp.tileM.loadMap("/res/worldV2.txt");
+        }
     }
 
     public void pauseState(int code){

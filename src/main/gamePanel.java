@@ -140,7 +140,7 @@ public class gamePanel extends JPanel implements Runnable {
 
         //DEBUG START
         long drawStart = 0;
-        if (keyH.checkDrawTime){drawStart = System.nanoTime();}
+        if (keyH.showDebugText){drawStart = System.nanoTime();}
 
         //TITLE SCREEN
         if (gameState == titleState){
@@ -184,13 +184,22 @@ public class gamePanel extends JPanel implements Runnable {
 
 
 
-        //DEBUG END
-        if (keyH.checkDrawTime){
+        //DEBUG
+        if (keyH.showDebugText){
             long drawEnd = System.nanoTime();
             long passed = drawEnd - drawStart;
+
+            g2.setFont(new Font("Arial", Font.PLAIN, 20));
             g2.setColor(Color.white);
-            g2.drawString("Draw time: " + passed, 10, 400);
-            System.out.println("Draw time: " + passed);
+            int x = 10;
+            int y = 400;
+            int lineHeight = 20;
+
+            g2.drawString("WorldX " + player.worldX, x, y); y+=lineHeight; //showing current worldX
+            g2.drawString("WorldY " + player.worldY, x, y); y+=lineHeight; //showing current worldY
+            g2.drawString("Col " + (player.worldX+player.solidArea.x)/tileSize, x, y); y+=lineHeight; // current col
+            g2.drawString("Row " + (player.worldY+player.solidArea.y)/tileSize, x, y); y+=lineHeight; // current row
+            g2.drawString("Draw time: " + passed, x, y); // draw time
         }
 
         //DESTROYER :D
