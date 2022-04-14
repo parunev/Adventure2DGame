@@ -2,6 +2,7 @@ package main;
 
 import entity.entity;
 import object.objectHeart;
+import object.objectManaCrystal;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,6 +18,8 @@ public class userInterface {
     static BufferedImage heart_full;
     static BufferedImage heart_half;
     static BufferedImage heart_blank;
+    static BufferedImage crystal_full;
+    static BufferedImage crystal_blank;
     public static boolean messageOn = false;
     public static ArrayList<String> message = new ArrayList<>();
     public static ArrayList<Integer> messageCounter = new ArrayList<>();
@@ -43,6 +46,9 @@ public class userInterface {
         heart_full = heart.image;
         heart_half = heart.image2;
         heart_blank = heart.image3;
+        entity crystal = new objectManaCrystal(gp);
+        crystal_full =  crystal.image;
+        crystal_blank =  crystal.image2;
 
     }
 
@@ -88,7 +94,7 @@ public class userInterface {
         }
     }
 
-    //DRAWING PLAYER HEARTS
+    //DRAWING PLAYER HEARTS AND MANA
     public static void drawPlayerLife(){
 
         int x = gp.tileSize/2;
@@ -116,6 +122,27 @@ public class userInterface {
             i++;
             x += gp.tileSize;
         }
+
+        //DRAW MAX MANA
+        x = gp.tileSize/2-5;
+        y = (int)(gp.tileSize*1.5);
+        i = 0;
+        while (i < gp.player.maxMana){
+            g2.drawImage(crystal_blank, x, y, null);
+            i++;
+            x += 35;
+        }
+
+        //DRAW MANA
+        x = gp.tileSize/2-5;
+        y = (int)(gp.tileSize*1.5);
+        i = 0;
+        while (i < gp.player.mana){
+            g2.drawImage(crystal_full, x, y, null);
+            i++;
+            x+= 35;
+        }
+
 
     }
 
@@ -253,6 +280,8 @@ public class userInterface {
         textY += lineHeight;
         g2.drawString("LIFE:", textX, textY);
         textY += lineHeight;
+        g2.drawString("MANA:", textX, textY);
+        textY += lineHeight;
         g2.drawString("STRENGTH:", textX, textY);
         textY += lineHeight;
         g2.drawString("DEXTERITY:", textX, textY);
@@ -266,7 +295,7 @@ public class userInterface {
         g2.drawString("NEXT LEVEL:", textX, textY);
         textY += lineHeight;
         g2.drawString("COINS:", textX, textY);
-        textY += lineHeight+20;
+        textY += lineHeight+10;
         g2.drawString("WEAPON:", textX, textY);
         textY += lineHeight+15;
         g2.drawString("SHIELD:", textX, textY);
@@ -284,6 +313,11 @@ public class userInterface {
         textY += lineHeight;
 
         value = gp.player.life + "/" + gp.player.maxLife;
+        textX = getXFForAlignToRightText(value, tailX);
+        g2.drawString(value, textX, textY);
+        textY += lineHeight;
+
+        value = gp.player.mana + "/" + gp.player.maxMana;
         textX = getXFForAlignToRightText(value, tailX);
         g2.drawString(value, textX, textY);
         textY += lineHeight;
@@ -324,9 +358,9 @@ public class userInterface {
         textY += lineHeight + 20;
 
 
-        g2.drawImage(gp.player.currentWeapon.down1, tailX - gp.tileSize, textY-32, null);
+        g2.drawImage(gp.player.currentWeapon.down1, tailX - gp.tileSize, textY-42, null);
         textY += gp.tileSize;
-        g2.drawImage(gp.player.currentShield.down1, tailX - gp.tileSize, textY-32, null);
+        g2.drawImage(gp.player.currentShield.down1, tailX - gp.tileSize, textY-42, null);
 
     }
 
@@ -377,21 +411,19 @@ public class userInterface {
         g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight,10,10);
 
         //DESCRIPTION FRAME
-        int dFrameX = frameX;
         int dFrameY = frameY + frameHeight;
-        int dFrameWidth = frameWidth;
         int dFrameHeight = gp.tileSize*3;
 
 
         //DRAW DESCRIPTION TEXT
-        int textX = dFrameX+20;
+        int textX = frameX +20;
         int textY = dFrameY+gp.tileSize;
         g2.setFont(g2.getFont().deriveFont(25F));
 
         int itemIndex = getItemIndexOnSlot();
         if (itemIndex < gp.player.inventory.size()){
 
-            drawSubWindows(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+            drawSubWindows(frameX, dFrameY, frameWidth, dFrameHeight);
 
             for (String line : gp.player.inventory.get(itemIndex).description.split("\n")) {
                 g2.drawString(line, textX, textY);

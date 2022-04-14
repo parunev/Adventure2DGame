@@ -34,7 +34,12 @@ public class projectile extends  entity{
             }
         }
         if (user != gp.player){
-
+            boolean contactPlayer = gp.cCheker.checkPlayer(this);
+            //this means it can hit player and deal damage
+            if (!gp.player.invincible && contactPlayer){
+                damagePlayer(attack);
+                alive = false;
+            }
         }
 
         //Just like other npcs or monsters, projectiles move based on its speed and direction
@@ -60,4 +65,8 @@ public class projectile extends  entity{
             spriteCounter = 0;
         }
     }
+    public boolean haveResource(entity user) {
+        return false;
+    }
+    public void subtractResource(entity user){}
 }
