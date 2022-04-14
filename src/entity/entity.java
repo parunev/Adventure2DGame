@@ -50,7 +50,6 @@ public class entity {
     public int life;
     public int maxMana;
     public int mana;
-    public int ammo;
     public int level;
     public int strength;
     public int dexterity;
@@ -156,7 +155,7 @@ public class entity {
         if (!gp.player.invincible){ // we can give damage
             gp.playSE(6);
 
-            int damage = attack - gp.player.defence;
+            int damage = attack;
             if (damage<0){
                 damage = 0;
             }
