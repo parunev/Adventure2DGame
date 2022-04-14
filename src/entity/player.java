@@ -3,6 +3,7 @@ package entity;
 import main.gamePanel;
 import main.keyHandler;
 import main.userInterface;
+import object.objectFireball;
 import object.objectKey;
 import object.objectShield;
 import object.objectSword;
@@ -62,6 +63,7 @@ public class player extends entity{
         coin = 0;
         currentWeapon = new objectSword(gp);
         currentShield = new objectShield(gp);
+        projectile = new objectFireball(gp); // fireball skill
         attack = getAttack(); // the total attack value is decided by strength and weapon
         defence = getDefence(); // the total defence value is decided by dexterity and shield
     }
@@ -181,6 +183,19 @@ public class player extends entity{
                 spriteCounter = 0;
             }
         }
+        if (gp.keyH.shotKeyPressed && !projectile.alive && shotAvailableCounter == 30){
+
+            //SET DEFAULT COORDINATES, DIRECTION AND USER
+            projectile.set(worldX, worldY, direction,true,this);
+
+            //ADD TO THE LIST
+            gp.projectileList.add(projectile);
+
+            shotAvailableCounter = 0;
+
+            gp.playSE(10);
+        }
+
         //This needs to be outside of key if-statement
         if (invincible){
             invincibleCounter++;
@@ -188,6 +203,9 @@ public class player extends entity{
                 invincible = false;
                 invincibleCounter = 0;
             }
+        }
+        if (shotAvailableCounter < 30){
+            shotAvailableCounter++;
         }
     }
 
@@ -221,7 +239,7 @@ public class player extends entity{
 
             //CHECK MONSTER COLLISION WITH THE UPDATED worldX, worldY, solidArea
             int monsterIndex = gp.cCheker.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex);
+            damageMonster(monsterIndex, attack);
 
             //AFTER CHECKING COLLISION RESTORE THE ORIGINAL DATA
             worldX = currentWorldX;
@@ -282,7 +300,7 @@ public class player extends entity{
     }
 
     //MONSTER RECEIVES DMG
-    public void damageMonster(int i){
+    public void damageMonster(int i, int attack){
         if (i != 999){
             if (!gp.monster[i].invincible){
                 gp.playSE(5);

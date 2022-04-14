@@ -43,6 +43,7 @@ public class gamePanel extends JPanel implements Runnable {
     public entity[] obj = new entity[10];
     public entity[] npc = new entity[10];
     public entity[] monster = new entity[20];
+    public ArrayList<entity> projectileList = new ArrayList<>();
     ArrayList<entity> entityList = new ArrayList<>();
 
     //GAME STATE
@@ -110,14 +111,16 @@ public class gamePanel extends JPanel implements Runnable {
         if (gameState == playState){
             //PLAYER
             player.update();
+
             //NPC
             for (entity entity : npc) {
                 if (entity != null) {
                     entity.update();
                 }
             }
+
             for (int i = 0; i <monster.length ; i++) {
-                if (monster[i]!=null){
+                if (monster[i] != null){
                     if (monster[i].alive){
                         monster[i].update();
                     }
@@ -126,9 +129,20 @@ public class gamePanel extends JPanel implements Runnable {
                     }
             }
             }
+
+            for (int i = 0; i <projectileList.size() ; i++) {
+                if (projectileList.get(i) != null){
+                    if (projectileList.get(i).alive){
+                        projectileList.get(i).update();
+                    }
+                    if (!projectileList.get(i).alive){
+                        projectileList.remove(i);
+                    }
+                }
+            }
         }
         if (gameState == pauseState){
-            //nothing
+            stopMusic();
         }
 
     }
@@ -163,6 +177,11 @@ public class gamePanel extends JPanel implements Runnable {
                 }
             }
             for (entity entity : monster) {
+                if (entity != null) {
+                    entityList.add(entity);
+                }
+            }
+            for (entity entity : projectileList) {
                 if (entity != null) {
                     entityList.add(entity);
                 }

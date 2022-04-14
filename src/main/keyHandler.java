@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 // used for receiving keyboard events(strokes)
 public class keyHandler implements KeyListener {
     gamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, shotKeyPressed;
 
     //DEBUG
     public boolean showDebugText = false;
@@ -65,14 +65,12 @@ public class keyHandler implements KeyListener {
         if (code == KeyEvent.VK_ENTER){enterPressed = true;} // enter button
         if (code == KeyEvent.VK_P){ gp.gameState = gp.pauseState;} //pause button
         if (code == KeyEvent.VK_C){ gp.gameState = gp.characterState;} // character status button
+        if (code == KeyEvent.VK_F){ shotKeyPressed = true;} // shooting key pressed
+
 
         //DEBUG
         if (code == KeyEvent.VK_T){ // showing debug info
-           if (!showDebugText){
-               showDebugText = true;
-           }else{
-               showDebugText = false;
-           }
+            showDebugText = !showDebugText;
         }
         //RELOAD MAP WHEN UPDATED
         if (code == KeyEvent.VK_R){
@@ -81,7 +79,7 @@ public class keyHandler implements KeyListener {
     }
 
     public void pauseState(int code){
-        if (code == KeyEvent.VK_P){ gp.gameState = gp.playState;} // when we press p we pause the game
+        if (code == KeyEvent.VK_P){ gp.gameState = gp.playState ;gp.playMusic(0);} // when we press p we pause the game
     }
 
     public void dialogueState(int code){
@@ -134,6 +132,7 @@ public class keyHandler implements KeyListener {
         if (code == KeyEvent.VK_S){downPressed = false;}
         if (code == KeyEvent.VK_A){leftPressed = false;}
         if (code == KeyEvent.VK_D){rightPressed = false;}
+        if (code == KeyEvent.VK_F){shotKeyPressed = false;}
     }
 
     @Override
