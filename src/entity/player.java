@@ -212,6 +212,12 @@ public class player extends entity{
         if (shotAvailableCounter < 30){
             shotAvailableCounter++;
         }
+        if (life > maxLife){
+            life = maxLife;
+        }
+        if (mana > maxMana){
+            mana = maxMana;
+        }
     }
 
     //DAMAGE BETWEEN CHARACTER AND MONSTER
@@ -263,18 +269,29 @@ public class player extends entity{
     public void pickUpObject(int i){
         if (i != 999){
 
-            String text;
+            //PICKUP ONLY ITEMS
+            if (gp.obj[i].type == typePickup){
 
-            if (inventory.size() != inventorySize){
-                inventory.add(gp.obj[i]);
-                gp.playSE(1);
-                text = "Got a " + gp.obj[i].name + "!";
-            }else{
-                text = "You cannot carry any more!";
+                //we immediately call this use method so the effect is instant
+                gp.obj[i].use(this);
+                gp.obj[i] = null;
             }
-            userInterface.addMessage(text);
-            gp.obj[i] = null;
-        }
+            //INVENTORY ITEMS
+            else{
+
+                String text;
+
+                if (inventory.size() != inventorySize){
+                    inventory.add(gp.obj[i]);
+                    gp.playSE(1);
+                    text = "Got a " + gp.obj[i].name + "!";
+                }else{
+                    text = "You cannot carry any more!";
+                }
+                userInterface.addMessage(text);
+                gp.obj[i] = null;
+            }
+            }
     }
 
     //IF YOU HIT THE NPC

@@ -40,7 +40,7 @@ public class gamePanel extends JPanel implements Runnable {
 
     //ENTITY AND OBJECTS
     public player player = new player(this, keyH);
-    public entity[] obj = new entity[10];
+    public entity[] obj = new entity[20];
     public entity[] npc = new entity[10];
     public entity[] monster = new entity[20];
     public ArrayList<entity> projectileList = new ArrayList<>();
@@ -125,6 +125,7 @@ public class gamePanel extends JPanel implements Runnable {
                         monster[i].update();
                     }
                     if (!monster[i].alive){
+                        monster[i].checkDrop();//when the monster die we check the drop before we set it null
                         monster[i] = null;
                     }
             }

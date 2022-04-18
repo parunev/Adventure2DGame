@@ -1,12 +1,16 @@
 package monster;
 
 import main.gamePanel;
+import object.objectCoin;
+import object.objectHeart;
+import object.objectManaCrystal;
 import object.objectRock;
 
 import java.util.Random;
 
 public class greenSlime extends entity.entity{
 
+    //MAIN
     public greenSlime(gamePanel gp) {
         super(gp);
 
@@ -76,6 +80,18 @@ public class greenSlime extends entity.entity{
         //WHEN THE MONSTER RECEIVES DAMAGE ITS START MOVING IN THE DIRECTION PLAYER IS FACING
         actionLockCounter = 0;
         direction = gp.player.direction;
+    }
+
+    //THIS METHOD IS CALLED WHEN THE MONSTER DIES
+    public void checkDrop(){
+
+        //CAST A DIE
+        int i = new Random().nextInt(100)+1;
+
+        //SET THE MONSTER DROP BY THIS NUMBER
+        if (i < 50){dropItem(new objectCoin(gp));} // 50% of the time drops a coin
+        if (i >= 50 && i < 75){dropItem(new objectHeart(gp));} // 25% of the time drops a heart
+        if (i >= 75 && i < 100){dropItem(new objectManaCrystal(gp));} // 25% of the time drops a mana
     }
 
 }

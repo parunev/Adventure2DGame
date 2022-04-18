@@ -67,6 +67,7 @@ public class entity {
     public int defenceValue;
     public String description = "";
     public int useCost;
+    public int value;
 
     //TYPE
     public int type; //0 player, 1 npc, 2 monster
@@ -77,6 +78,7 @@ public class entity {
     public final int typeAxe = 4;
     public final int typeShield = 5;
     public final int typeConsumable = 6;
+    public final int typePickup = 7;
 
 
     public entity(gamePanel gp){
@@ -105,6 +107,25 @@ public class entity {
 
     //CHECK CONSUMABLE
     public void use(entity entity){}
+
+    //CHECK DROP
+    public void checkDrop(){
+
+    }
+
+    //DROP ITEM
+    public void dropItem(entity droppedItem){
+        for (int i = 0; i < gp.obj.length ; i++) {
+            if (gp.obj[i] == null){
+                gp.obj[i] = droppedItem;
+
+                //the dead monsters worldX and worldY, so the drop appears where the monster died
+                gp.obj[i].worldX = worldX;
+                gp.obj[i].worldY = worldY;
+                break;
+            }
+        }
+    }
 
     //CHECK COLLISION BETWEEN ENTITIES
     public void update(){
@@ -222,7 +243,7 @@ public class entity {
                 dyingAnimation(g2);
             }
             // tile[tileNum].image is getting number from the txt. 0 - grass, 1 - wall, 2 - water etc. etc.
-            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(image, screenX, screenY,null);
 
             changeAlpha(g2, 1F);
         }

@@ -5,12 +5,13 @@ import main.gamePanel;
 import main.userInterface;
 
 public class objectPotion extends entity {
-    int value = 5;
+
     public objectPotion(gamePanel gp) {
         super(gp);
 
         type = typeConsumable;
         name = "Health Potion";
+        value = 5;
         down1 = setup("potion_red", gp.tileSize, gp.tileSize);
         defenceValue = 1;
         description = "[" + name + "]\nHeals your life by " + value + ".";

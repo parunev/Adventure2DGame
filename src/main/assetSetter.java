@@ -2,10 +2,7 @@ package main;
 
 import entity.NPC_OldMan;
 import monster.greenSlime;
-import object.objectAxe;
-import object.objectBlueShield;
-import object.objectKey;
-import object.objectPotion;
+import object.*;
 
 public class assetSetter {
 
@@ -19,15 +16,15 @@ public class assetSetter {
     public void setObject(){
 
         int i = 0;
-        gp.obj[i] = new objectKey(gp);
+        gp.obj[i] = new objectCoin(gp);
         gp.obj[i].worldX = gp.tileSize*25;
         gp.obj[i].worldY = gp.tileSize*23;
         i++;
-        gp.obj[i] = new objectKey(gp);
+        gp.obj[i] = new objectCoin(gp);
         gp.obj[i].worldX = gp.tileSize*21;
         gp.obj[i].worldY = gp.tileSize*19;
         i++;
-        gp.obj[i] = new objectKey(gp);
+        gp.obj[i] = new objectCoin(gp);
         gp.obj[i].worldX = gp.tileSize*26;
         gp.obj[i].worldY = gp.tileSize*21;
         i++;
@@ -42,6 +39,14 @@ public class assetSetter {
         gp.obj[i] = new objectPotion(gp);
         gp.obj[i].worldX = gp.tileSize*22;
         gp.obj[i].worldY = gp.tileSize*27;
+        i++;
+        gp.obj[i] = new objectHeart(gp);
+        gp.obj[i].worldX = gp.tileSize*22;
+        gp.obj[i].worldY = gp.tileSize*29;
+        i++;
+        gp.obj[i] = new objectManaCrystal(gp);
+        gp.obj[i].worldX = gp.tileSize*22;
+        gp.obj[i].worldY = gp.tileSize*31;
     }
 
     //ADDING NPCS TO THE MAP
