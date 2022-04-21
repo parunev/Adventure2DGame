@@ -30,6 +30,7 @@ public class projectile extends  entity{
             int monsterIndex = gp.cCheker.checkEntity(this, gp.monster);
             if (monsterIndex != 999){
                 gp.player.damageMonster(monsterIndex, attack);
+                generateParticle(user.projectile,gp.monster[monsterIndex]);
                 alive = false; // if the projectile hits a monster, it dies (disappear)
             }
         }
@@ -38,6 +39,7 @@ public class projectile extends  entity{
             //this means it can hit player and deal damage
             if (!gp.player.invincible && contactPlayer){
                 damagePlayer(attack);
+                generateParticle(user.projectile,gp.player);
                 alive = false;
             }
         }

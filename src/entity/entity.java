@@ -127,6 +127,39 @@ public class entity {
         }
     }
 
+    //PARTICLES BLUEPRINT
+    public Color getParticleColor(){
+        Color color = null;
+        return color;
+    }
+    public int getParticleSize(){
+        int size = 0;
+        return size;
+    }
+    public int getParticleSpeed(){
+        int speed = 0;
+        return speed;
+    }
+    public int getParticleMaxLife(){
+        int maxLife = 0;
+        return maxLife;
+    }
+    public void generateParticle(entity generator, entity target){
+        Color color = generator.getParticleColor();
+        int size = generator.getParticleSize();
+        int speed = generator.getParticleSpeed();
+        int maxLife = generator.getParticleMaxLife();
+
+        particle p1 = new particle(gp,generator,color,size,speed,maxLife,-2,-1);
+        particle p2 = new particle(gp,generator,color,size,speed,maxLife,2,-1);
+        particle p3 = new particle(gp,generator,color,size,speed,maxLife,-2,1);
+        particle p4 = new particle(gp,generator,color,size,speed,maxLife,2,1);
+        gp.particleList.add(p1);
+        gp.particleList.add(p2);
+        gp.particleList.add(p3);
+        gp.particleList.add(p4);
+    }
+
     //CHECK COLLISION BETWEEN ENTITIES
     public void update(){
         setAction();

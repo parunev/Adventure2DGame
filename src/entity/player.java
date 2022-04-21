@@ -361,6 +361,9 @@ public class player extends entity{
             gp.iTile[i].life--;
             gp.iTile[i].invincible = true;
 
+            //GENERATE PARTICLE
+            generateParticle(gp.iTile[i],gp.iTile[i]);
+
             if (gp.iTile[i].life == 0){
                 gp.iTile[i] = gp.iTile[i].getDestroyedForm();
             }
