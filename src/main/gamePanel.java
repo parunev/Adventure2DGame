@@ -7,6 +7,7 @@ import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -25,6 +26,12 @@ public class gamePanel extends JPanel implements Runnable {
     //WORLD SETTING
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
+
+    //FOR FULL SCREEN
+    int screenWidth2 = screenWidth;
+    int screenHeight2 = screenHeight;
+    BufferedImage tempScreen;
+    Graphics2D g2;
 
     //SYSTEM
     double fps = 60;
@@ -74,6 +81,9 @@ public class gamePanel extends JPanel implements Runnable {
         aSetter.setInteractiveTile();
         //playMusic(0);
         gameState = titleState;
+
+        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+        g2 = (Graphics2D) tempScreen.getGraphics();
     }
 
     public void startGameThread(){gameThread = new Thread(this);gameThread.start();}
@@ -98,7 +108,8 @@ public class gamePanel extends JPanel implements Runnable {
 
             if (delta>=1){
                 update();
-                repaint();
+                drawToTempScreen(); // draw everything to the buffered image
+                drawToScreen(); // draw the buffered image to the screen
                 delta--;
                 drawCount++;
             }
@@ -166,11 +177,7 @@ public class gamePanel extends JPanel implements Runnable {
         }
 
     }
-
-    //imagine this is your paintbrush
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
+    public void drawToTempScreen(){
 
         //DEBUG START
         long drawStart = 0;
@@ -179,7 +186,7 @@ public class gamePanel extends JPanel implements Runnable {
         //TITLE SCREEN
         if (gameState == titleState){
             userInterface.draw(g2);
-        //OTHERS
+            //OTHERS
         }else{
             //TILE
             tileM.draw(g2); // always draw the tiles first otherwise you'll not see the character
@@ -252,9 +259,12 @@ public class gamePanel extends JPanel implements Runnable {
             g2.drawString("Row " + (player.worldY+player.solidArea.y)/tileSize, x, y); y+=lineHeight; // current row
             g2.drawString("Draw time: " + passed, x, y); // draw time
         }
+    }
 
-        //DESTROYER :D
-        g2.dispose();
+    public void drawToScreen(){
+        Graphics2D g = (Graphics2D) getGraphics();
+        g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
+        g.dispose();
     }
 
     //PLAYING MUSIC
