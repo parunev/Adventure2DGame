@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class entity {
+public class    entity {
 
     public gamePanel gp;
 
@@ -145,15 +145,15 @@ public class entity {
         return maxLife;
     }
     public void generateParticle(entity generator, entity target){
-        Color color = generator.getParticleColor();
-        int size = generator.getParticleSize();
-        int speed = generator.getParticleSpeed();
-        int maxLife = generator.getParticleMaxLife();
+        Color color = target.getParticleColor();
+        int size = target.getParticleSize();
+        int speed = target.getParticleSpeed();
+        int maxLife = target.getParticleMaxLife();
 
-        particle p1 = new particle(gp,generator,color,size,speed,maxLife,-2,-1);
-        particle p2 = new particle(gp,generator,color,size,speed,maxLife,2,-1);
-        particle p3 = new particle(gp,generator,color,size,speed,maxLife,-2,1);
-        particle p4 = new particle(gp,generator,color,size,speed,maxLife,2,1);
+        particle p1 = new particle(gp,target,color,size,speed,maxLife,-2,-1);
+        particle p2 = new particle(gp,target,color,size,speed,maxLife,2,-1);
+        particle p3 = new particle(gp,target,color,size,speed,maxLife,-2,1);
+        particle p4 = new particle(gp,target,color,size,speed,maxLife,2,1);
         gp.particleList.add(p1);
         gp.particleList.add(p2);
         gp.particleList.add(p3);
