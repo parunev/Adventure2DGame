@@ -75,6 +75,7 @@ public class gamePanel extends JPanel implements Runnable {
         this.setFocusable(true); // receiving key inputs the game panel is focused:D
 
     }
+
     //creating this method for adding other stuff in the future
     public void setupGame(){
         aSetter.setObject();
@@ -90,6 +91,7 @@ public class gamePanel extends JPanel implements Runnable {
        // setFullScreen(); // turn this on for fullscreen
     }
 
+    //full screen setup
     public void setFullScreen(){
 
         //GET LOCAL SCREEN DEVICE

@@ -45,6 +45,7 @@ public class sound {
 
     public void stop(){clip.stop();}
 
+    //SETTING UP VOLUME
     public void checkVolume(){
         switch (volumeScale) {
             case 0 -> volume = -80f;
