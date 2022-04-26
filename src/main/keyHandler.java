@@ -29,6 +29,8 @@ public class keyHandler implements KeyListener {
         else if (gp.gameState == gp.dialogState){dialogueState(code);}
         //CHARACTER STATE
         else if (gp.gameState == gp.characterState){characterState(code);}
+        //OPTIONS STATE
+        else if (gp.gameState == gp.optionsState){optionsState(code);}
     }
 
     public void titleState(int code){
@@ -65,6 +67,7 @@ public class keyHandler implements KeyListener {
         if (code == KeyEvent.VK_ENTER){enterPressed = true;} // enter button
         if (code == KeyEvent.VK_P){ gp.gameState = gp.pauseState;} //pause button
         if (code == KeyEvent.VK_C){ gp.gameState = gp.characterState;} // character status button
+        if (code == KeyEvent.VK_ESCAPE){ gp.gameState = gp.optionsState;} // options button
         if (code == KeyEvent.VK_F){ shotKeyPressed = true;} // shooting key pressed
 
 
@@ -121,6 +124,62 @@ public class keyHandler implements KeyListener {
         }
         if (code == KeyEvent.VK_ENTER){
             gp.player.selectItem();
+        }
+    }
+
+    public void optionsState(int code){
+        if (code == KeyEvent.VK_ESCAPE){
+            gp.gameState = gp.playState;
+        }
+        if (code == KeyEvent.VK_ENTER){
+            enterPressed = true;
+        }
+
+        int maxCommandNum = switch (userInterface.subState) {
+            case 0 -> 5;
+            case 3 -> 1;
+            default -> 0;
+        };
+
+        if (code == KeyEvent.VK_W){
+            userInterface.commandNum--;
+            gp.playSE(9);
+            if (userInterface.commandNum < 0){
+                userInterface.commandNum = maxCommandNum;
+            }
+        }
+        if (code == KeyEvent.VK_S){
+            userInterface.commandNum++;
+            gp.playSE(9);
+            if (userInterface.commandNum > maxCommandNum){
+                userInterface.commandNum = 0;
+            }
+        }
+        if (code == KeyEvent.VK_A){
+            if (userInterface.subState == 0){
+                if (userInterface.commandNum == 1 && gp.music.volumeScale > 0){
+                    gp.music.volumeScale--;
+                    gp.music.checkVolume();
+                    gp.playSE(9);
+                }
+                if (userInterface.commandNum == 2 && gp.se.volumeScale > 0){
+                    gp.se.volumeScale--;
+                    gp.playSE(9);
+                }
+            }
+        }
+        if (code == KeyEvent.VK_D){
+            if (userInterface.subState == 0){
+                if (userInterface.commandNum == 1 && gp.music.volumeScale < 5){
+                    gp.music.volumeScale++;
+                    gp.music.checkVolume();
+                    gp.playSE(9);
+                }
+                if (userInterface.commandNum == 2 && gp.se.volumeScale < 5){
+                    gp.se.volumeScale++;
+                    gp.playSE(9);
+                }
+            }
         }
     }
 

@@ -32,6 +32,7 @@ public class gamePanel extends JPanel implements Runnable {
     int screenHeight2 = screenHeight;
     BufferedImage tempScreen;
     Graphics2D g2;
+    public boolean fullScreenOn = false;
 
     //SYSTEM
     double fps = 60;
@@ -63,6 +64,7 @@ public class gamePanel extends JPanel implements Runnable {
     public final int pauseState = 2;
     public final int dialogState = 3;
     public final int characterState = 4;
+    public final int optionsState = 5;
 
 
     public gamePanel(){
@@ -85,7 +87,7 @@ public class gamePanel extends JPanel implements Runnable {
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
 
-       // setFullScreen();
+       // setFullScreen(); // turn this on for fullscreen
     }
 
     public void setFullScreen(){

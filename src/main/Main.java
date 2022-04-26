@@ -11,7 +11,7 @@ public class  Main {
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Adventure2DGame");
-      //  window.setUndecorated(true);
+      //  window.setUndecorated(true); // turn this one for fullscreen
 
         //calling the gamePanel
         gamePanel gamePanel = new gamePanel();
