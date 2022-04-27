@@ -554,6 +554,7 @@ public class userInterface {
         volumeWidth = 24 * gp.se.volumeScale;
         g2.fillRect(textX, textY,volumeWidth,24);
 
+        gp.config.safeConfig();
     }
     public static void options_fullScreenNotification(int frameX, int frameY){
         int textX = frameX + gp.tileSize;

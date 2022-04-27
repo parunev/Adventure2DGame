@@ -44,6 +44,7 @@ public class gamePanel extends JPanel implements Runnable {
     public assetSetter aSetter = new assetSetter(this);
     public userInterface UI = new userInterface(this);
     public eventHandler eHandler = new eventHandler(this);
+    config config = new config(this);
     Thread gameThread;
 
 
@@ -88,7 +89,9 @@ public class gamePanel extends JPanel implements Runnable {
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
 
-       // setFullScreen(); // turn this on for fullscreen
+       if (fullScreenOn){
+           setFullScreen();
+       }
     }
 
     //full screen setup
