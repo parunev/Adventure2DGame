@@ -97,7 +97,11 @@ public class userInterface {
         //OPTIONS STATE
         if (gp.gameState == gp.optionsState){
             drawOptionsScreen();
+        }
 
+        //GAME OVER STATE
+        if (gp.gameState == gp.gameOverState){
+            drawGameOverScreen();
         }
     }
 
@@ -440,6 +444,46 @@ public class userInterface {
     }
 
     //SETTING UP OPTION MENU
+    public static void drawGameOverScreen(){
+
+        g2.setColor(new Color(0,0,0,150));
+        g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
+
+        int x;
+        int y;
+        String text;
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,110f));
+
+        text = "Game Over";
+        //shadow
+        g2.setColor(Color.black);
+        x = getXFForCenteredText(text);
+        y = gp.tileSize*4;
+        g2.drawString(text, x, y);
+        //main
+        g2.setColor(Color.WHITE);
+        g2.drawString(text,x-4,y-4);
+
+        //retry
+        g2.setFont(g2.getFont().deriveFont(50f));
+        text = "Retry";
+        x = getXFForCenteredText(text);
+        y += gp.tileSize*4;
+        g2.drawString(text, x, y);
+        if (commandNum == 0){
+            g2.drawString(">",x-40,y);
+        }
+
+        //back to title screen
+        text = "Quit";
+        x = getXFForCenteredText(text);
+        y += 55;
+        g2.drawString(text, x, y);
+        if (commandNum == 1  ){
+            g2.drawString(">",x-40,y);
+        }
+
+    }
     public static void drawOptionsScreen(){
 
         g2.setColor(Color.WHITE);
