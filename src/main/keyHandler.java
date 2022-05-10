@@ -188,14 +188,14 @@ public class keyHandler implements KeyListener {
     public void gameOverState(int code){
         if (code == KeyEvent.VK_W){
             userInterface.commandNum--;
-            if (userInterface.commandNum <0){
+            if (userInterface.commandNum < 0){
                 userInterface.commandNum = 1;
             }
             gp.playSE(9);
         }
         if (code == KeyEvent.VK_S){
             userInterface.commandNum++;
-            if (userInterface.commandNum >1){
+            if (userInterface.commandNum > 1){
                 userInterface.commandNum = 0;
             }
             gp.playSE(9);
@@ -204,6 +204,7 @@ public class keyHandler implements KeyListener {
             if (userInterface.commandNum == 0){
                 gp.gameState = gp.playState;
                 gp.retry();
+                gp.playMusic(0);
             }else if (userInterface.commandNum == 1){
                 gp.gameState = gp.titleState;
                 gp.restart();

@@ -236,6 +236,8 @@ public class player extends entity{
         }
         if (life<=0){
             gp.gameState = gp.gameOverState;
+            userInterface.commandNum = -1;
+            gp.stopMusic();
             gp.playSE(12);
         }
     }
