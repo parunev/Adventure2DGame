@@ -1,5 +1,6 @@
 package main;
 
+import entity.NPC_Merchant;
 import entity.NPC_OldMan;
 import interactiveTile.interactiveDryTree;
 import monster.greenSlime;
@@ -62,7 +63,7 @@ public class assetSetter {
 
         //MAP 1
         mapNum = 1;
-        gp.npc[mapNum][0] = new NPC_OldMan(gp);
+        gp.npc[mapNum][0] = new NPC_Merchant(gp);
         gp.npc[mapNum][0].worldX = gp.tileSize*12;
         gp.npc[mapNum][0].worldY = gp.tileSize*7;
 

@@ -10,7 +10,6 @@ import object.objectSword;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class player extends entity{
 
@@ -18,8 +17,6 @@ public class player extends entity{
     public final int screenX;
     public final int screenY;
     public boolean attackCanceled = false;
-    public ArrayList<entity> inventory = new ArrayList<>();
-    public final int inventorySize = 20;
 
     //MAIN PLAYER
     public player(gamePanel gp, keyHandler keyH){

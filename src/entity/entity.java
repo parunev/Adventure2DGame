@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class    entity {
@@ -63,6 +64,8 @@ public class    entity {
     public projectile projectile;
 
     //ITEM ATTRIBUTES
+    public ArrayList<entity> inventory = new ArrayList<>();
+    public final int inventorySize = 20;
     public int attackValue;
     public int defenceValue;
     public String description = "";
