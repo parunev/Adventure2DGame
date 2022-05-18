@@ -15,11 +15,7 @@ public class userInterface {
     static gamePanel gp;
     public static Graphics2D g2;
     static Font pixelFont;
-    static BufferedImage heart_full;
-    static BufferedImage heart_half;
-    static BufferedImage heart_blank;
-    static BufferedImage crystal_full;
-    static BufferedImage crystal_blank;
+    static BufferedImage heart_full, heart_half, heart_blank, crystal_full, crystal_blank;
     public static boolean messageOn = false;
     public static ArrayList<String> message = new ArrayList<>();
     public static ArrayList<Integer> messageCounter = new ArrayList<>();
@@ -29,6 +25,7 @@ public class userInterface {
     public static int slotCol = 0;
     public static int slotRow = 0;
     static int subState = 0;
+    static int counter = 0;
 
 
     public userInterface(gamePanel gp){
@@ -102,6 +99,11 @@ public class userInterface {
         //GAME OVER STATE
         if (gp.gameState == gp.gameOverState){
             drawGameOverScreen();
+        }
+
+        //TRANSITION STATE
+        if (gp.gameState == gp.transitionState){
+            drawTransition();
         }
     }
 
@@ -696,6 +698,24 @@ public class userInterface {
                 subState = 0;
                 commandNum = 4;
             }
+        }
+
+    }
+
+    //TRANSITION
+    public static void drawTransition(){
+        counter++;
+        g2.setColor(new Color(0,0,0,counter*5));
+        g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
+
+        if (counter == 50){
+            counter = 0;
+            gp.gameState = gp.playState;
+            gp.currentMap = gp.eHandler.tempMap;
+            gp.player.worldX = gp.tileSize * gp.eHandler.tempCol;
+            gp.player.worldY = gp.tileSize * gp.eHandler.tempRow;
+            gp.eHandler.previousEventX = gp.player.worldX;
+            gp.eHandler.previousEventY = gp.player.worldY;
         }
 
     }
