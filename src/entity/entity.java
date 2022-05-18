@@ -115,13 +115,13 @@ public class    entity {
 
     //DROP ITEM
     public void dropItem(entity droppedItem){
-        for (int i = 0; i < gp.obj.length ; i++) {
-            if (gp.obj[i] == null){
-                gp.obj[i] = droppedItem;
+        for (int i = 0; i < gp.obj[1].length ; i++) {
+            if (gp.obj[gp.currentMap][i] == null){
+                gp.obj[gp.currentMap][i] = droppedItem;
 
                 //the dead monsters worldX and worldY, so the drop appears where the monster died
-                gp.obj[i].worldX = worldX;
-                gp.obj[i].worldY = worldY;
+                gp.obj[gp.currentMap][i].worldX = worldX;
+                gp.obj[gp.currentMap][i].worldY = worldY;
                 break;
             }
         }

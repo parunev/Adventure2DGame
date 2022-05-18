@@ -79,7 +79,10 @@ public class keyHandler implements KeyListener {
         }
         //RELOAD MAP WHEN UPDATED
         if (code == KeyEvent.VK_R){
-            gp.tileM.loadMap("/res/worldV2.txt");
+            switch (gp.currentMap) {
+                case 0 -> gp.tileM.loadMap("/res/worldV3.txt", 0);
+                case 1 -> gp.tileM.loadMap("/res/interior01.txt", 1);
+            }
         }
     }
 

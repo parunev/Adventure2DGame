@@ -14,14 +14,15 @@ import java.util.Objects;
 public class TileManager {
     gamePanel gp;
     public Tile[] tile; //array
-    public int[][] mapTileNum;
+    public int[][][] mapTileNum;
 
     public TileManager(gamePanel gp){
         this.gp = gp;
         tile = new Tile[50];// increasing size because of adding new tiles
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+        mapTileNum = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
-        loadMap("/res/worldV2.txt");
+        loadMap("/res/worldV3.txt",0);
+        loadMap("/res/interior01.txt",1);
     }
 
     //implementing the images similar to the player part
@@ -71,6 +72,9 @@ public class TileManager {
             setup(39, "earth", false);
             setup(40, "wall", true);
             setup(41, "tree", true);
+            setup(42, "hut", false);
+            setup(43, "floor01", false);
+            setup(44, "table01", true);
     }
 
     public void setup(int index, String imageName, boolean collision){
@@ -85,7 +89,7 @@ public class TileManager {
         }
     }
 
-    public void loadMap(String filePath){
+    public void loadMap(String filePath, int map){
         try{
             InputStream is = getClass().getResourceAsStream(filePath);
             assert is != null;
@@ -100,7 +104,7 @@ public class TileManager {
 
                     int num = Integer.parseInt(numbers[col]); // using col as index for numbers[]array
 
-                    mapTileNum[col][row] = num; // we store the extracted number
+                    mapTileNum[map][col][row] = num; // we store the extracted number
                     col++; // continue this until everything in the numbers[] is store in the mapTileNum[][]
                 }
                 if (col == gp.maxWorldCol){
@@ -117,7 +121,7 @@ public class TileManager {
        int worldRow = 0;
 
        while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow){
-           int tileNum = mapTileNum[worldCol][worldRow];
+           int tileNum = mapTileNum[gp.currentMap][worldCol][worldRow];
 
            // extracting a tile number from index
             int worldX = worldCol * gp.tileSize;

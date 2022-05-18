@@ -2,7 +2,7 @@ package main;
 
 public class eventHandler {
     gamePanel gp;
-    eventRect[][] eventRect;
+    eventRect[][][] eventRect;
 
     //disable event until player moves away by 1 tile distance
     int previousEventX, previousEventY;
@@ -11,24 +11,30 @@ public class eventHandler {
     public eventHandler(gamePanel gp){
         this.gp = gp;
         //Setting up eventRect on every single map tile
-        eventRect = new eventRect[gp.maxWorldCol][gp.maxWorldRow];
+        eventRect = new eventRect[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
 
+        int map = 0;
         int col = 0;
         int row = 0;
-        while (col < gp.maxWorldCol && row < gp.maxWorldRow){
+        while (map < gp.maxMap && col < gp.maxWorldCol && row < gp.maxWorldRow){
             //we set trigger point to be middle of a tile
-            eventRect[col][row] = new eventRect();
-            eventRect[col][row].x = 23;
-            eventRect[col][row].y = 23;
-            eventRect[col][row].width = 2;
-            eventRect[col][row].height = 3;
-            eventRect[col][row].eventRectDefaultX = eventRect[col][row].x;
-            eventRect[col][row].eventRectDefaultY = eventRect[col][row].y;
+            eventRect[map][col][row] = new eventRect();
+            eventRect[map][col][row].x = 23;
+            eventRect[map][col][row].y = 23;
+            eventRect[map][col][row].width = 2;
+            eventRect[map][col][row].height = 3;
+            eventRect[map][col][row].eventRectDefaultX = eventRect[map][col][row].x;
+            eventRect[map][col][row].eventRectDefaultY = eventRect[map][col][row].y;
 
             col++;
             if (col == gp.maxWorldCol){
                 col = 0;
                 row++;
+
+                if (row == gp.maxWorldRow){
+                    row = 0;
+                    map++;
+                }
             }
         }
     }
@@ -44,50 +50,52 @@ public class eventHandler {
         }
 
         if (canTouchEvent){
-            if (hit(27, 16, "right")){damagePit(27, 16,gp.dialogState);}
-            if (hit(23, 19, "any")){damagePit(27, 16,gp.dialogState);}
-            if (hit(23, 12,"up")){healingPool(23, 12, gp.dialogState);}
+            if (hit(0,27, 16, "right")){damagePit(gp.dialogState);}
+            else if (hit(0,23, 12,"up")){healingPool(gp.dialogState);}
+            else if (hit(0,10,39,"any")){teleport(1, 12,13);}
+            else if (hit(1,12,13,"any")){teleport(0, 10,39);}
         }
-
-
     }
 
     //CHECK EVENT COLLISION
-    public boolean hit(int col, int row, String regDirection){
+    public boolean hit(int map, int col, int row, String regDirection){
 
         boolean hit = false;
 
-        //GETTING PLAYER CURRENT SOLID AREA
-        gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
-        gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
+        if (map == gp.currentMap){
 
-        //GETTING EVENT SOLID AREA POSITIONS
-        eventRect[col][row].x = col*gp.tileSize + eventRect[col][row].x;
-        eventRect[col][row].y = row*gp.tileSize + eventRect[col][row].y;
+            //GETTING PLAYER CURRENT SOLID AREA
+            gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
+            gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
 
-        //CHECKING IF PLAYER SOLID AREA IS COLLIDING WITH EVENTRECT SOLID AREA
-        if (gp.player.solidArea.intersects(eventRect[col][row]) && (!eventRect[col][row].eventDone)){
-            if (gp.player.direction.contentEquals(regDirection) || regDirection.contentEquals("any")){
-                hit = true;
+            //GETTING EVENT SOLID AREA POSITIONS
+            eventRect[map][col][row].x = col*gp.tileSize + eventRect[map][col][row].x;
+            eventRect[map][col][row].y = row*gp.tileSize + eventRect[map][col][row].y;
 
-                //based on this we check the distance between player character and last event
-                previousEventX = gp.player.worldX;
-                previousEventY = gp.player.worldY;
+            //CHECKING IF PLAYER SOLID AREA IS COLLIDING WITH EVENTRECT SOLID AREA
+            if (gp.player.solidArea.intersects(eventRect[map][col][row]) && (!eventRect[map][col][row].eventDone)){
+                if (gp.player.direction.contentEquals(regDirection) || regDirection.contentEquals("any")){
+                    hit = true;
+
+                    //based on this we check the distance between player character and last event
+                    previousEventX = gp.player.worldX;
+                    previousEventY = gp.player.worldY;
+                }
             }
+
+            //AFTER CHECKING THE COLLISION RESET SOLID AREA x and y
+            gp.player.solidArea.x = gp.player.solidAreaDefaultX;
+            gp.player.solidArea.y = gp.player.solidAreaDefaultY;
+
+            eventRect[map][col][row].x = eventRect[map][col][row].eventRectDefaultX;
+            eventRect[map][col][row].y = eventRect[map][col][row].eventRectDefaultY;
         }
-
-        //AFTER CHECKING THE COLLISION RESET SOLID AREA x and y
-        gp.player.solidArea.x = gp.player.solidAreaDefaultX;
-        gp.player.solidArea.y = gp.player.solidAreaDefaultY;
-
-        eventRect[col][row].x = eventRect[col][row].eventRectDefaultX;
-        eventRect[col][row].y = eventRect[col][row].eventRectDefaultY;
 
         return hit;
     }
 
     //DAMAGE PIT EVENT
-    public void damagePit(int col, int row, int gameState){
+    public void damagePit( int gameState){
         gp.gameState = gameState;
         gp.playSE(6);
         userInterface.currentDialog = "You fall into a pit!";
@@ -97,7 +105,7 @@ public class eventHandler {
     }
 
     //HEALING POOL EVENT
-    public void healingPool(int col, int row,int gameState){
+    public void healingPool(int gameState){
         if (gp.keyH.enterPressed){
             gp.gameState = gameState;
             gp.player.attackCanceled = true;
@@ -107,5 +115,17 @@ public class eventHandler {
             gp.player.mana = gp.player.maxMana;
             gp.aSetter.setMonster();
         }
+    }
+
+    //TELEPORT
+    public void teleport(int map, int col, int row){
+
+        gp.currentMap = map;
+        gp.player.worldX = gp.tileSize * col;
+        gp.player.worldY = gp.tileSize * row;
+        previousEventX = gp.player.worldX;
+        previousEventY = gp.player.worldY;
+        canTouchEvent = false;
+        gp.playSE(13);
     }
 }
