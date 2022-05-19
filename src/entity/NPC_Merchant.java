@@ -1,6 +1,7 @@
 package entity;
 
 import main.gamePanel;
+import main.userInterface;
 import object.*;
 
 public class NPC_Merchant extends entity{
@@ -34,6 +35,11 @@ public class NPC_Merchant extends entity{
         inventory.add(new objectSword(gp));
         inventory.add(new objectAxe(gp));
         inventory.add(new objectBlueShield(gp));
+    }
+    public void speak(){
+        super.speak();
+        gp.gameState = gp.tradeState;
+        userInterface.npc = this;
     }
 
 }

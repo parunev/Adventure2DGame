@@ -26,6 +26,7 @@ public class userInterface {
     public static int slotRow = 0;
     static int subState = 0;
     static int counter = 0;
+    public static entity npc;
 
 
     public userInterface(gamePanel gp){
@@ -104,6 +105,11 @@ public class userInterface {
         //TRANSITION STATE
         if (gp.gameState == gp.transitionState){
             drawTransition();
+        }
+
+        //TRADE STATE
+        if (gp.gameState == gp.tradeState){
+            drawTradeScreen();
         }
     }
 
@@ -254,9 +260,9 @@ public class userInterface {
     public static void drawDialogScreen(){
 
         //DIALOG WINDOW PARAMETERS
-        int x = gp.tileSize*2;
+        int x = gp.tileSize*3;
         int y = gp.tileSize/2;
-        int width = gp.screenWidth - (gp.tileSize*4);
+        int width = gp.screenWidth - (gp.tileSize*6);
         int height = gp.tileSize*4;
         drawSubWindows(x,y,width, height);
 
@@ -717,6 +723,44 @@ public class userInterface {
             gp.eHandler.previousEventX = gp.player.worldX;
             gp.eHandler.previousEventY = gp.player.worldY;
         }
+
+    }
+
+    //TRADE
+    public static void drawTradeScreen(){
+        switch (subState) {
+            case 0 -> trade_select();
+            case 1 -> trade_buy();
+            case 2 -> trade_sell();
+        }
+        gp.keyH.enterPressed = false;
+    }
+    public static void trade_select(){
+        drawDialogScreen();
+        //DRAW WINDOW
+        int x = gp.tileSize*15;
+        int y = gp.tileSize*4;
+        int width = gp.tileSize*3;
+        int height = (int)(gp.tileSize*3.5);
+        drawSubWindows(x,y,width,height);
+
+        //DRAW TEXTS
+        x += gp.tileSize;
+        y += gp.tileSize;
+        g2.drawString("Buy",x,y);
+        if (commandNum == 0){g2.drawString(">",x-24,y);}
+        y += gp.tileSize;
+        g2.drawString("Sell",x,y);
+        if (commandNum == 1){g2.drawString(">",x-24,y);}
+        y += gp.tileSize;
+        g2.drawString("Leave",x,y);
+        if (commandNum == 2){g2.drawString(">",x-24,y);}
+
+    }
+    public static void trade_buy(){
+
+    }
+    public static void trade_sell(){
 
     }
 
