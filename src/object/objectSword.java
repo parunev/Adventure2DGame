@@ -13,5 +13,6 @@ public class objectSword extends entity.entity{
         attackArea.width = 36;
         attackArea.height = 36;
         description = "[" + name + "]\nAn Old Sword.";
+        price = 55;
     }
 }

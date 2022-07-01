@@ -10,5 +10,6 @@ public class objectKey extends entity.entity{
         name = "key";
         down1 = setup("key", gp.tileSize, gp.tileSize);
         description = "[" + name + "]\nIt opens a door.";
+        price = 25;
     }
 }

@@ -11,5 +11,6 @@ public class objectShield extends entity.entity{
         down1 = setup("shield_wood", gp.tileSize, gp.tileSize);
         defenceValue = 1;
         description = "[" + name + "]\nMade by wood.";
+        price = 55;
     }
 }

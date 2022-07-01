@@ -102,36 +102,10 @@ public class keyHandler implements KeyListener {
         if (code == KeyEvent.VK_C){
             gp.gameState = gp.playState;
         }
-        if (code == KeyEvent.VK_W){
-            if (userInterface.slotRow != 0){
-                userInterface.slotRow--;
-                gp.playSE(9);
-            }
-
-        }
-        if (code == KeyEvent.VK_A){
-            if (userInterface.slotCol != 0){
-                userInterface.slotCol--;
-                gp.playSE(9);
-            }
-
-        }
-        if (code == KeyEvent.VK_S){
-            if (userInterface.slotRow != 3){
-                userInterface.slotRow++;
-                gp.playSE(9);
-            }
-
-        }
-        if (code == KeyEvent.VK_D){
-            if (userInterface.slotCol != 4){
-                userInterface.slotCol++;
-                gp.playSE(9);
-            }
-        }
         if (code == KeyEvent.VK_ENTER){
             gp.player.selectItem();
         }
+        playerInventory(code);
     }
 
     public void optionsState(int code){
@@ -234,6 +208,72 @@ public class keyHandler implements KeyListener {
                 if (userInterface.commandNum > 2){
                     userInterface.commandNum = 0;
                 }
+                gp.playSE(9);
+            }
+        }
+        if (userInterface.subState == 1){
+            npcInventory(code);
+            if (code == KeyEvent.VK_ESCAPE){
+                userInterface.subState = 0;
+            }
+        }
+        if (userInterface.subState == 2){
+            playerInventory(code);
+            if (code == KeyEvent.VK_ESCAPE){
+                userInterface.subState = 0;
+            }
+        }
+    }
+
+    public void playerInventory(int code){
+        if (code == KeyEvent.VK_W){
+            if (userInterface.playerSlotRow != 0){
+                userInterface.playerSlotRow--;
+                gp.playSE(9);
+            }
+        }
+        if (code == KeyEvent.VK_A){
+            if (userInterface.playerSlotCol != 0){
+                userInterface.playerSlotCol --;
+                gp.playSE(9);
+            }
+        }
+        if (code == KeyEvent.VK_S){
+            if (userInterface.playerSlotRow != 3){
+                userInterface.playerSlotRow++;
+                gp.playSE(9);
+            }
+        }
+        if (code == KeyEvent.VK_D){
+            if (userInterface.playerSlotCol  != 4){
+                userInterface.playerSlotCol ++;
+                gp.playSE(9);
+            }
+        }
+    }
+
+    public void npcInventory(int code){
+        if (code == KeyEvent.VK_W){
+            if (userInterface.npcSlotRow != 0){
+                userInterface.npcSlotRow--;
+                gp.playSE(9);
+            }
+        }
+        if (code == KeyEvent.VK_A){
+            if (userInterface.npcSlotCol != 0){
+                userInterface.npcSlotCol --;
+                gp.playSE(9);
+            }
+        }
+        if (code == KeyEvent.VK_S){
+            if (userInterface.npcSlotRow != 3){
+                userInterface.npcSlotRow++;
+                gp.playSE(9);
+            }
+        }
+        if (code == KeyEvent.VK_D){
+            if (userInterface.npcSlotCol  != 4){
+                userInterface.npcSlotCol ++;
                 gp.playSE(9);
             }
         }

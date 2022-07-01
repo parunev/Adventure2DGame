@@ -61,7 +61,7 @@ public class player extends entity{
         dexterity = 1; // the more dexterity he has, the less damage he receives
         exp = 0;
         nextLevelEXP = 5;
-        coin = 0;
+        coin = 500;
         currentWeapon = new objectSword(gp);
         currentShield = new objectShield(gp);
         projectile = new objectFireball(gp); // fireball skill
@@ -408,7 +408,7 @@ public class player extends entity{
 
     //ITEM SELECTION
     public void selectItem(){
-        int itemIndex  = userInterface.getItemIndexOnSlot();
+        int itemIndex  = userInterface.getItemIndexOnSlot(userInterface.playerSlotCol,userInterface.playerSlotRow);
 
         if (itemIndex < inventory.size()){
             entity selectedItem = inventory.get(itemIndex);
